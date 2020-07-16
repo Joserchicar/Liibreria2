@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="https://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="https://java.sun.com/xml/ns/j2ee https://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<description>Ejemplo de Tags propios</description>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>2.0</jsp-version>
+	<shortname>ejemplos</shortname>
+	<info>Etiquetas de ejemplo</info>
+
+	<tag>
+		<name>holamundo</name>
+		<tagclass>com.ipartek.formacion.tags.TagHolaMundo</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Ejemplo para ver como crear un tag propio, solo escribe 'hola
+			mundo'</info>
+	</tag>
+
+	<tag>
+		<name>holamundo2</name>
+		<tagclass>com.ipartek.formacion.tags.TagHolaMujndoSimple</tagclass>
+		<bodycontent>empty</bodycontent>
+		<info>Ejemplo para ver como crear un tag propio, solo escribe 'hola
+			mundo'</info>
+	</tag>
+
+	<tag>
+		<name>boton</name>
+		<tagclass>com.ipartek.formacion.tags.TagBoton</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>colorFondo</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>texto</name>
+			<required>true</required>
+		</attribute>
+		<info>Ejemplo para ver como crear un boton pasandole dos pametros</info>
+	</tag>
+	
+	<tag>
+		<name>card</name>
+		<tagclass>com.ipartek.formacion.tags.TagCard</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>titulo</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>urlImagen</name>
+			<required>true</required>
+		</attribute>		
+		<attribute>
+			<name>urlEnlaceBoton</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>descripcion</name>
+			<required>false</required>
+		</attribute>
+		<info>Card basada en BootStrap, tiene 3 parametros obligatorios y uno opcional</info>
+	</tag>
+	
+	<tag>
+		<name>badge</name>
+		<tagclass>com.ipartek.formacion.tags.TagBadge</tagclass>
+		<bodycontent>empty</bodycontent>
+		<attribute>
+			<name>valorMostrar</name>
+			<required>true</required>
+		</attribute>
+		<attribute>
+			<name>valorComparar</name>
+			<required>true</required>
+		</attribute>
+		<info>Muestra un componente badge de bootsrap con el valorMostrar.  el color de fondos era verde si valorMostrar &gt; valorComparar, color naranja valorMostrar &lt; valorComparar, color azul si son iguales  </info>
+	</tag>
+	
+
+</taglib>
