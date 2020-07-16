@@ -57,7 +57,8 @@ public class LoginController extends HttpServlet {
 			ServletContext sc = request.getServletContext();
 			int usuariosConectados = (int) sc.getAttribute("usuarios_conectados");
 			sc.setAttribute("usuarios_conectados", ++usuariosConectados);
-request.setAttribute("alerta", new Alerta("success", "Ongi Etorri, ya estas Logeado"));
+			
+			request.setAttribute("alerta", new Alerta("success", "Ongi Etorri, ya estas Logeado"));
 			
 			if ( usuario.getRol().getId() == Rol.ADMINISTRADOR ) {		
 				request.getRequestDispatcher("backoffice/index.jsp").forward(request, response);

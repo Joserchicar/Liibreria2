@@ -176,20 +176,16 @@ public class GeneroDAOImpl implements GeneroDAO {
 					try( ResultSet rsKeys = pst.getGeneratedKeys() ){						
 						if ( rsKeys.next() ) {
 							int id = rsKeys.getInt(1);
-							pojo.setId(id);
+							genero.setId(id);
 						}						
 					}				
 					
 			}else {				
-				throw new Exception("No se ha podido guardar el registro " + pojo );
+				throw new Exception("No se ha podido guardar el registro " + genero );
 			}
 		}
 		
-		return pojo;
-		
-		
-		
-		throw new Exception("Sin implementar de momento");
+		return genero;
 	}
 
 	@Override

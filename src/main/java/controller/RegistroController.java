@@ -3,7 +3,7 @@ package controller;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Set;
-import java.util.logging.Logger;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import javax.xml.validation.Validator;
+
+
+import org.apache.log4j.Logger;
 
 import modelo.modeloDAOImpl.GeneroDAOImpl;
 import modelo.modeloDAOImpl.LibroDAOImpl;
