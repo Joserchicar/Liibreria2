@@ -61,10 +61,15 @@ CREATE TABLE `libro` (
   `genero` int(11) NOT NULL,
   `imagen` varchar(100) DEFAULT NULL,
   `precio` decimal(5,2) NOT NULL,
+  `id_Usuario` int(11) NOT NULL,
+  `fecha_Creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_Validacion` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `titulo` (`titulo`),
   KEY `libro_FK` (`genero`),
-  CONSTRAINT `libro_FK` FOREIGN KEY (`genero`) REFERENCES `genero` (`id`)
+  KEY `libro_FK_1` (`id_Usuario`),
+  CONSTRAINT `libro_FK` FOREIGN KEY (`genero`) REFERENCES `genero` (`id`),
+  CONSTRAINT `libro_FK_1` FOREIGN KEY (`id_Usuario`) REFERENCES `usuario` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,8 +79,33 @@ CREATE TABLE `libro` (
 
 LOCK TABLES `libro` WRITE;
 /*!40000 ALTER TABLE `libro` DISABLE KEYS */;
-INSERT INTO `libro` VALUES (1,'El Quijote',2,'\"https://picsum.photos/100/100\";',24.50),(2,'La Celestina',2,'\"https://picsum.photos/100/100\";',18.99),(3,'La Regenta',2,'\"https://picsum.photos/100/100\";',16.40),(4,'El Lazarillo de Tormes',2,'\"https://picsum.photos/100/100\";',12.20),(5,'Fortunata y Jacinta',2,'\"https://picsum.photos/100/100\";',17.00),(6,'El seÃ±or de los anillos',4,'\"https://picsum.photos/100/100\";',24.50),(7,'La ley de Murphy',6,'\"https://picsum.photos/100/100\";',18.00),(8,'Las Bicicletas son para el verano',6,'\"https://picsum.photos/100/100\";',22.00),(13,'Fundacion',3,'\"https://picsum.photos/100/100\";',18.99);
+INSERT INTO `libro` VALUES (1,'El Quijote',2,'\"https://picsum.photos/100/100\";',24.50,1,'2020-07-13 12:34:03','2020-07-13 12:34:03'),(2,'La Celestina',2,'\"https://picsum.photos/100/100\";',18.99,1,'2020-07-13 12:34:03',NULL),(3,'La Regenta',2,'\"https://picsum.photos/100/100\";',16.40,1,'2020-07-13 12:34:03',NULL),(4,'El Lazarillo de Tormes',2,'\"https://picsum.photos/100/100\";',12.20,1,'2020-07-13 12:34:03','2020-07-13 12:34:03'),(5,'Fortunata y Jacinta',2,'\"https://picsum.photos/100/100\";',17.00,1,'2020-07-13 12:34:03',NULL),(6,'El seÃ±or de los anillos',4,'\"https://picsum.photos/100/100\";',24.50,1,'2020-07-13 12:34:03','2020-07-13 12:34:03'),(7,'La ley de Murphy',6,'\"https://picsum.photos/100/100\";',18.00,1,'2020-07-13 12:34:03',NULL),(8,'Las Bicicletas son para el verano',6,'\"https://picsum.photos/100/100\";',22.00,1,'2020-07-13 12:34:03',NULL),(13,'Fundacion',3,'\"https://picsum.photos/100/100\";',18.99,1,'2020-07-13 12:34:03',NULL);
 /*!40000 ALTER TABLE `libro` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rol`
+--
+
+DROP TABLE IF EXISTS `rol`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rol` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `rol_UN` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rol`
+--
+
+LOCK TABLES `rol` WRITE;
+/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'ADMINISTRADOR'),(2,'USUARIO');
+/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -90,8 +120,11 @@ CREATE TABLE `usuario` (
   `nombre` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
   `contrasenia` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `imagen` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `id_Rol` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `usuario_UN` (`nombre`)
+  UNIQUE KEY `usuario_UN` (`nombre`),
+  KEY `usuario_FK` (`id_Rol`),
+  CONSTRAINT `usuario_FK` FOREIGN KEY (`id_Rol`) REFERENCES `rol` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci COMMENT='tabla de usuario';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,7 +134,7 @@ CREATE TABLE `usuario` (
 
 LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
-INSERT INTO `usuario` VALUES (1,'admin','admin','https://picsum.photos/id/1/100/100'),(2,'Benito','123456','https://picsum.photos/id/1/100/100'),(3,'Carolina','123456','https://picsum.photos/id/1/100/100'),(4,'Daniel','123456','https://picsum.photos/id/1/100/100');
+INSERT INTO `usuario` VALUES (1,'admin','admin','https://picsum.photos/id/1/100/100',1),(2,'Benito','123456','https://picsum.photos/id/1/100/100',2),(3,'Carolina','123456','https://picsum.photos/id/1/100/100',2),(4,'Daniel','123456','https://picsum.photos/id/1/100/100',2);
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -114,4 +147,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-06-26 12:05:02
+-- Dump completed on 2020-07-17 13:32:01
