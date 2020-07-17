@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 
 import controller.Alerta;
 import modelo.modeloDAOImpl.GeneroDAOImpl;
-import modelo.pojo.Genero;
 
 /**
  * Application Lifecycle Listener implementation class InicioAppListenner
@@ -18,7 +17,7 @@ import modelo.pojo.Genero;
 @WebListener
 public class InicioAppListener implements ServletContextListener {
 
-	private final static Logger LOG=Logger.getLogger(InicioAppListener.class);
+	private final static Logger LOG = Logger.getLogger(InicioAppListener.class);
 	static private final GeneroDAOImpl generoDAO = GeneroDAOImpl.getInstance();
 
 	/**
@@ -26,7 +25,7 @@ public class InicioAppListener implements ServletContextListener {
 	 */
 	public void contextDestroyed(ServletContextEvent sce) {
 		// cuando paramos la App
-		
+
 		LOG.info("Apagando Servidor");
 	}
 
@@ -42,8 +41,8 @@ public class InicioAppListener implements ServletContextListener {
 		ServletContext contextoAplicacion = sce.getServletContext();
 
 		try {
-
-			contextoAplicacion.setAttribute("categorias", generoDAO.getAll());
+			contextoAplicacion.setAttribute("usuarios_conectados", 0);
+			contextoAplicacion.setAttribute("generos", generoDAO.getAll());
 
 		} catch (Exception e) {
 			LOG.fatal(e);

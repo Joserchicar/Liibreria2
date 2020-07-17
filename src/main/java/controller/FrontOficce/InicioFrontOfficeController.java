@@ -28,8 +28,8 @@ public class InicioFrontOfficeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO recueprar datos de inicio para el usuario
 		
-				request.setAttribute("productos_aprobados", 3);
-				request.setAttribute("productos_pendientes", 2);
+				request.setAttribute("libros_aprobados", 3);
+				request.setAttribute("libros_pendientes", 2);
 				
 				// CUIDADO: mirar la URL del servlet "/frontoffice/inicio"
 				// cuando hacemos forward se pierde lo ultimo de la url y se le suma la variabel pagina
