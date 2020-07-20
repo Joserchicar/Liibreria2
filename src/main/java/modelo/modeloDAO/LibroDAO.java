@@ -18,6 +18,17 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	ArrayList<Libro> getAllByTitulo(String titulo);
 
 	/**
+	 * 
+	 * Obtiene lo libros de un usuario.Pueden estar validados o no.
+	 * @param idUsuario int identificador del usuario
+	 * @param isValidado boolean true para mostrar los  libros con fecha_validacion, false para mostrar los pendientes de validar
+	 * @return
+	 */
+	
+	ArrayList<Libro>getAllByUser(int idUsuario,boolean isValidado);
+	
+	
+	/**
 	 * Obtiene los ultimos registros ordenador por id descentente
 	 * 
 	 * @param numReg int numero de registros a recuperar

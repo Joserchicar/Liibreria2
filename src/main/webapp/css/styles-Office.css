@@ -10260,3 +10260,14 @@ body {
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
 }
+
+/* Custom Styles
+
+.big-number{
+	front-size:3rem;
+}
+
+table img{
+	width:100px;
+	height:m100px;
+}

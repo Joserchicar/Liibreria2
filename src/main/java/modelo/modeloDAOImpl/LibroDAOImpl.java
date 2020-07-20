@@ -16,7 +16,8 @@ import modelo.pojo.Libro;
 public class LibroDAOImpl implements LibroDAO {
 
 	private static LibroDAOImpl INSTANCE = null;
-private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
+	private final static Logger LOG = Logger.getLogger(LibroDAOImpl.class);
+
 	private LibroDAOImpl() {
 		super();
 	}
@@ -30,49 +31,34 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 		return INSTANCE;
 	}
 
-	// SQL   executeQuery => ResultSet
-	private final String SQL_GET_ALL = "SELECT" + 
-			"l.id  'libro_id'," + 
-			"titulo , " + 
-			"l.imagen 'imagen'," + 
-			"l.precio 'precio'," + 
-			"g.id  'genero_id'," + 
-			"g.genero 'genero' " + 
-			"FROM libro l,genero g " + 
-			"WHERE l.genero = g.id "+
-			"ORDER BY l.id ASC LIMIT 500;";
+	// SQL executeQuery => ResultSet
+	private final String SQL_GET_ALL = "SELECT" + "l.id  'libro_id'," + "titulo , " + "l.imagen 'imagen',"
+			+ "l.precio 'precio'," + "g.id  'genero_id'," + "g.genero 'genero' " + "FROM libro l,genero g "
+			+ "WHERE l.genero = g.id " + "ORDER BY l.id ASC LIMIT 500;";
 
-	private final String SQL_GET_LAST = "SELECT" + 
-			" l.id  'libro_id', " + 
-			" titulo ," +
-			"l.imagen 'imagen'," + 
-			"l.precio 'precio'," + 
-			" g.id  'genero_id',"+ 
-			"g.genero 'genero_genero' " +
-			" FROM libro l,genero g " +
-			" WHERE l.genero = g.id "+ 
-			" ORDER BY l.id ASC LIMIT ? ; ";
+	private final String SQL_GET_LAST = "SELECT" + " l.id  'libro_id', " + " titulo ," + "l.imagen 'imagen',"
+			+ "l.precio 'precio'," + " g.id  'genero_id'," + "g.genero 'genero_genero' " + " FROM libro l,genero g "
+			+ " WHERE l.genero = g.id " + " ORDER BY l.id ASC LIMIT ? ; ";
 
-	private final String SQL_GET_BY_GENERO = "SELECT" +
-			" l.id  'libro_id', " + 
-			" titulo ," + 
-			"l.imagen 'imagen'," + 
-			"l.precio 'precio'," + 
-			" g.id  'genero_id',"+
-			"g.genero 'genero_genero' " + 
-			" FROM libro l,genero g " +
-			" WHERE l.genero = g.id "+
-			" ORDER BY g.id ASC LIMIT ? ; ";
+	private final String SQL_GET_BY_GENERO = "SELECT" + " l.id  'libro_id', " + " titulo ," + "l.imagen 'imagen',"
+			+ "l.precio 'precio'," + " g.id  'genero_id'," + "g.genero 'genero_genero' " + " FROM libro l,genero g "
+			+ " WHERE l.genero = g.id " + " ORDER BY g.id ASC LIMIT ? ; ";
 
-	private final String SQL_GET_BY_ID = "SELECT " + 
-			" l.id  'libro_id', " + 
-			" titulo ," + 
-			"l.imagen 'imagen'," + 
-			"l.precio 'precio'," + 
-			"g.id  'genero_id',"+ 
-			"g.genero 'genero' " +
-			" FROM libro l,genero g " +
-			"WHERE l.genero = g.id AND l.id=? LIMIT 500;";
+	private final String SQL_GET_BY_USUARIO_LIBRO_VALIDADO = " SELECT l.id  'libro_id',\n" + "			titulo ,"
+			+ "			l.imagen 'imagen'," + "			l.precio 'precio', " + "			g.id  'genero_id',"
+			+ "			g.genero 'genero' " + "			FROM libro l,genero g "
+			+ "			WHERE l.genero  = g.id AND fecha_Validacion IS NOT NULL AND l.id_Usuario = ? "
+			+ "			ORDER BY l.id DESC LIMIT 500;";
+
+	private final String SQL_GET_BY_USUARIO_LIBRO_SIN_VALIDAR = " SELECT l.id  'libro_id',\n" + "			titulo ,"
+			+ "			l.imagen 'imagen'," + "			l.precio 'precio', " + "			g.id  'genero_id',"
+			+ "			g.genero 'genero' " + "			FROM libro l,genero g "
+			+ "			WHERE l.genero  = g.id AND fecha_Validacion IS NULL AND l.id_Usuario = ? "
+			+ "			ORDER BY l.id DESC LIMIT 500;";
+
+	private final String SQL_GET_BY_ID = "SELECT " + " l.id  'libro_id', " + " titulo ," + "l.imagen 'imagen',"
+			+ "l.precio 'precio'," + "g.id  'genero_id'," + "g.genero 'genero' " + " FROM libro l,genero g "
+			+ "WHERE l.genero = g.id AND l.id=? LIMIT 500;";
 
 	private final String SQL_INSERT = " INSERT INTO libro (titulo, precio, imagen,id_usuario,genero_id) VALUES ( ?,?,?,1,? ) ; ";
 	private final String SQL_UPDATE = "UPDATE libro SET nombre=?, precio=?,imagen=?,genero_id=? WHERE id=? ; ";
@@ -81,7 +67,7 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 
 	@Override
 	public ArrayList<Libro> getAll() throws Exception {
-		
+
 		ArrayList<Libro> registros = new ArrayList<Libro>();
 
 		// Execute Query
@@ -101,11 +87,49 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 
 		} catch (Exception e) {
 			LOG.error(e);
-			
+
 		}
 
 		return registros;
 	}
+
+	@Override
+	public ArrayList<Libro> getAllByUser(int idUsuario, boolean isValidado) {
+		ArrayList<Libro> registros = new ArrayList<Libro>();
+
+		// Execute Query
+		String sql = (isValidado) ? SQL_GET_BY_USUARIO_LIBRO_VALIDADO : SQL_GET_BY_USUARIO_LIBRO_SIN_VALIDAR;
+
+		try (Connection conexion = ConnectionManager.getConnection();
+				PreparedStatement pst = conexion.prepareStatement(sql);
+
+		) {
+
+			// TODO mirar como hacerlo con una SQL, "IS NOT NULL" o "IS NULL"
+			// pst.setBoolean(1, isValidado); // me sustituye con un 1 o 0
+
+			pst.setInt(1, idUsuario);
+
+			LOG.debug(pst);
+
+			try (ResultSet rs = pst.executeQuery()) {
+				while (rs.next()) {
+
+					// guardar en lista
+					registros.add(mapper(rs));
+
+				} // while
+
+			}
+
+		} catch (Exception e) {
+			LOG.error(e);
+
+		}
+
+		return registros;
+	}
+
 	@Override
 	public ArrayList<Libro> getLast(int numReg) {
 
@@ -114,9 +138,9 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 		try (Connection conexion = ConnectionManager.getConnection();
 				PreparedStatement pst = conexion.prepareStatement(SQL_GET_LAST);) {
 			pst.setInt(1, numReg);
-			System.out.println("SQL_GET_LAST:"+ pst);
+			System.out.println("SQL_GET_LAST:" + pst);
 			try (ResultSet rs = pst.executeQuery()) {
-				
+
 				LOG.debug(pst);
 				while (rs.next()) {
 					registros.add(mapper(rs));
@@ -124,9 +148,9 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 			}
 
 		} catch (Exception e) {
-			
+
 			LOG.error(e);
-			
+
 		}
 		return registros;
 	}
@@ -142,22 +166,21 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 			pst.setInt(1, idGenero);
 			pst.setInt(2, numReg);
 			try (ResultSet rs = pst.executeQuery()) {
-				
+
 				LOG.debug(pst);
 				while (rs.next())
 					registros.add(mapper(rs));
 			}
 
 		} catch (Exception e) {
-			
+
 			LOG.error(e);
-			
+
 		}
 
 		return registros;
 	}
-	
-	
+
 	@Override
 	public Libro getById(int id) throws Exception {
 
@@ -169,7 +192,7 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 
 			pst.setInt(1, id);
 			LOG.debug(pst);
-			
+
 			ResultSet rs = pst.executeQuery();
 
 			if (rs.next()) {
@@ -184,8 +207,6 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 		return registro;
 	}
 
-	
-
 	@Override
 	public Libro delete(int id) throws Exception {
 
@@ -199,7 +220,7 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 
 			pst.setInt(1, id);
 			LOG.debug(pst);
-			
+
 			int affectedRows = pst.executeUpdate();
 
 			if (affectedRows != 1) {
@@ -222,16 +243,15 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 				PreparedStatement pst = conexion.prepareStatement(SQL_INSERT,
 						PreparedStatement.RETURN_GENERATED_KEYS);) {
 
-			
 			pst.setString(1, libro.getTitulo());
-			pst.setFloat(2, libro.getPrecio() );
-			pst.setString(3, libro.getImagen() );
+			pst.setFloat(2, libro.getPrecio());
+			pst.setString(3, libro.getImagen());
 			pst.setInt(4, libro.getGenero().getId());
 			LOG.debug(pst);
 			int affectedRows = pst.executeUpdate();
 
 			if (affectedRows == 1) {
-				
+
 				// conseguir el id
 
 				try (ResultSet rsKeys = pst.getGeneratedKeys()) {
@@ -259,7 +279,6 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 	@Override
 	public Libro update(Libro libro) throws Exception {
 
-		
 		// execute query
 
 		try (Connection conexion = ConnectionManager.getConnection();
@@ -284,12 +303,11 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 
 		return libro;
 	}
+
 	@Override
 	public ArrayList<Libro> getAllRangoPrecio(int precioMinimo, int precioMaximo) throws Exception {
-		throw new Exception("Sin implementar");		
+		throw new Exception("Sin implementar");
 	}
-	
-	
 
 	private Libro mapper(ResultSet rs) throws SQLException {
 
@@ -312,12 +330,8 @@ private final static Logger LOG=Logger.getLogger(LibroDAOImpl.class );
 
 	@Override
 	public ArrayList<Libro> getAllByTitulo(String titulo) {
-		
+		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-
-
 
 }
