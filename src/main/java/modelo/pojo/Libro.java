@@ -19,6 +19,8 @@ public class Libro {
 		@Min( value = 0, message = "Debe ser positivo")
 		private float precio;
 		
+		private Usuario usuario;
+		
 		private Genero genero;
 		
 
@@ -29,6 +31,7 @@ public class Libro {
 		this.titulo = "";
 		this.imagen = "https://picsum.photos/100/100";
 		this.precio = 0;
+		this.usuario=new Usuario();
 		this.genero=new Genero();
 		
 	}
@@ -84,49 +87,23 @@ public class Libro {
 		this.genero = genero;
 	}
 
+	
+	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 	@Override
 	public String toString() {
-		return "Libro [id=" + id + ", titulo=" + titulo + ", imagen=" + imagen + ", precio=" + precio + ", genero="
-				+ genero + "]";
+		return "Libro [id=" + id + ", titulo=" + titulo + ", imagen=" + imagen + ", precio=" + precio + ", usuario="
+				+ usuario + ", genero=" + genero + "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		result = prime * result + ((imagen == null) ? 0 : imagen.hashCode());
-		result = prime * result + Float.floatToIntBits(precio);
-		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Libro other = (Libro) obj;
-		if (id != other.id)
-			return false;
-		if (imagen == null) {
-			if (other.imagen != null)
-				return false;
-		} else if (!imagen.equals(other.imagen))
-			return false;
-		if (Float.floatToIntBits(precio) != Float.floatToIntBits(other.precio))
-			return false;
-		if (titulo == null) {
-			if (other.titulo != null)
-				return false;
-		} else if (!titulo.equals(other.titulo))
-			return false;
-		return true;
-	}
-
+	
 	
 	
 }

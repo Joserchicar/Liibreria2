@@ -108,6 +108,8 @@ public class LibroDAOImpl implements LibroDAO {
 			// TODO mirar como hacerlo con una SQL, "IS NOT NULL" o "IS NULL"
 			// pst.setBoolean(1, isValidado); // me sustituye con un 1 o 0
 
+			
+			pst.setNull(1, java.sql.Types.NULL);
 			pst.setInt(1, idUsuario);
 
 			LOG.debug(pst);
@@ -246,7 +248,8 @@ public class LibroDAOImpl implements LibroDAO {
 			pst.setString(1, libro.getTitulo());
 			pst.setFloat(2, libro.getPrecio());
 			pst.setString(3, libro.getImagen());
-			pst.setInt(4, libro.getGenero().getId());
+			pst.setInt(4,libro.getUsuario().getId() );
+			pst.setInt(5, libro.getGenero().getId());
 			LOG.debug(pst);
 			int affectedRows = pst.executeUpdate();
 

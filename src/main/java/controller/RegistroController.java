@@ -125,7 +125,7 @@ public class RegistroController extends HttpServlet {
 
 				} // if
 
-				alerta = new Alerta("success", "Libro registrado");
+				alerta = new Alerta("success", "Libro registrado. Pendiente de su validacion");
 			} else { // Si hay errores de validacion
 
 				String errores = "";
