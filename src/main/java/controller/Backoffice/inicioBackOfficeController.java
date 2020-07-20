@@ -25,10 +25,10 @@ public class inicioBackOfficeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO recuperar datos de inicio para el usuario
 		
-				request.setAttribute("numero_productos", 34578);
+				request.setAttribute("numero_libros", 34578);
 				request.setAttribute("numero_usuarios", 10000);
 				request.setAttribute("numero_logeados", 456);
-				request.setAttribute("productos_pendientes", 2);
+				request.setAttribute("libros_pendientes", 2);
 						
 				String pagina = "index.jsp";
 				LOG.debug("forward: " + pagina);
