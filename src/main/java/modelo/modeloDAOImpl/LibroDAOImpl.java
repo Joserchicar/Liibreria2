@@ -12,6 +12,7 @@ import modelo.conexion.ConnectionManager;
 import modelo.modeloDAO.LibroDAO;
 import modelo.pojo.Genero;
 import modelo.pojo.Libro;
+import modelo.pojo.ResumenUsuario;
 
 public class LibroDAOImpl implements LibroDAO {
 
@@ -44,6 +45,9 @@ public class LibroDAOImpl implements LibroDAO {
 			+ "l.precio 'precio'," + " g.id  'genero_id'," + "g.genero 'genero_genero' " + " FROM libro l,genero g "
 			+ " WHERE l.genero = g.id " + " ORDER BY g.id ASC LIMIT ? ; ";
 
+	private final String SQL_VIEW_RESUMEN_USUARIO = "SELECT id_usuario," + "total," + "aprobado," + "pendiente "
+			+ "FROM v_usuario_libro " + "WHERE id_usuario ;";
+
 	private final String SQL_GET_BY_USUARIO_LIBRO_VALIDADO = " SELECT l.id  'libro_id',\n" + "			titulo ,"
 			+ "			l.imagen 'imagen'," + "			l.precio 'precio', " + "			g.id  'genero_id',"
 			+ "			g.genero 'genero' " + "			FROM libro l,genero g "
@@ -65,6 +69,19 @@ public class LibroDAOImpl implements LibroDAO {
 
 	private final String SQL_DELETE = " DELETE FROM libro WHERE id = ? ; ";
 
+	@Override
+	public void validar(int id) {
+		// TODO Auto-generated method stub
+		// UPDATE libro SET fecha validado=NOW() where id=15;
+	}
+
+	@Override
+	public ArrayList<Libro> getAllByTitulo(String titulo) {
+		
+		return null;
+	}
+
+	
 	@Override
 	public ArrayList<Libro> getAll() throws Exception {
 
@@ -108,7 +125,6 @@ public class LibroDAOImpl implements LibroDAO {
 			// TODO mirar como hacerlo con una SQL, "IS NOT NULL" o "IS NULL"
 			// pst.setBoolean(1, isValidado); // me sustituye con un 1 o 0
 
-			
 			pst.setNull(1, java.sql.Types.NULL);
 			pst.setInt(1, idUsuario);
 
@@ -248,7 +264,7 @@ public class LibroDAOImpl implements LibroDAO {
 			pst.setString(1, libro.getTitulo());
 			pst.setFloat(2, libro.getPrecio());
 			pst.setString(3, libro.getImagen());
-			pst.setInt(4,libro.getUsuario().getId() );
+			pst.setInt(4, libro.getUsuario().getId());
 			pst.setInt(5, libro.getGenero().getId());
 			LOG.debug(pst);
 			int affectedRows = pst.executeUpdate();
@@ -311,6 +327,37 @@ public class LibroDAOImpl implements LibroDAO {
 	public ArrayList<Libro> getAllRangoPrecio(int precioMinimo, int precioMaximo) throws Exception {
 		throw new Exception("Sin implementar");
 	}
+	
+	
+	
+	@Override
+	public ResumenUsuario getResumenByUsuario(int idUsuario) {
+		
+		ResumenUsuario result=new ResumenUsuario();
+		
+		try (Connection conexion = ConnectionManager.getConnection();
+				 PreparedStatement pst = conexion.prepareStatement(SQL_VIEW_RESUMEN_USUARIO);
+				){
+					pst.setInt(1, idUsuario);
+					LOG.debug(pst);
+					
+					try(ResultSet rs=pst.executeQuery()){
+						
+						if (rs.next()) {
+							
+							result.setIdUsuario(idUsuario);
+							result.setLibrosTotal(rs.getInt("total"));
+							result.setLibrosAprobados(rs.getInt("aprobado"));
+							result.setLibrosPendientes(rs.getInt("pendiente"));
+						}
+					}
+					
+		} catch (Exception e) {
+			LOG.error(e);
+		}
+		
+		return result;
+	}
 
 	private Libro mapper(ResultSet rs) throws SQLException {
 
@@ -331,10 +378,6 @@ public class LibroDAOImpl implements LibroDAO {
 
 	}
 
-	@Override
-	public ArrayList<Libro> getAllByTitulo(String titulo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

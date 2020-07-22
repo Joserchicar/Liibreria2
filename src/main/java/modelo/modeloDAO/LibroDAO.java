@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import modelo.pojo.CRUDAble;
 import modelo.pojo.Libro;
+import modelo.pojo.ResumenUsuario;
 
 /**
  * Hereda los metodos basicos de la interfaz CrudAble Ademas definie un nuevo:
@@ -15,6 +16,21 @@ import modelo.pojo.Libro;
 
 public interface LibroDAO extends CRUDAble<Libro> {
 
+	
+	
+	/**
+	 * Validamos el libro para que sea visible en la parte publica
+	 * @param id identificador del libro
+	 * 
+	 */
+	void validar( int id );	
+	
+	
+	/**
+	 * 
+	 * @param titulo
+	 * @return
+	 */
 	ArrayList<Libro> getAllByTitulo(String titulo);
 
 	/**
@@ -45,8 +61,25 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 */
 	ArrayList<Libro> getAllByGenero(int idGenero, int numReg);
 
-	
+	/**
+	 * 
+	 * @param precioMinimo
+	 * @param precioMaximo
+	 * @return
+	 * @throws Exception
+	 */
 	ArrayList<Libro>getAllRangoPrecio(int precioMinimo,int precioMaximo) throws Exception;;
+	
+	/**
+	 * Obtiene los datos estaisticos del usuario y sus libros
+	 * @see ResumenUsuario
+	 * @param idUsuario
+	 * @return ResumenUsuario
+	 */
+	ResumenUsuario getResumenByUsuario(int idUsuario);
+	
+	
+	
 	
 	}
 

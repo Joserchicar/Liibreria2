@@ -11,10 +11,19 @@
 
 <h2>Mis libros</h2>
   <div class="row">
-                        
+                       		 <div class="col-xl-3 col-md-6">
+                                <div class="card bg-primary text-white mb-4">
+                                    <div class="card-body">Total <span class="big-number">${Resumen.librosTotal}</span></div>
+                                    <div class="card-footer d-flex align-items-center justify-content-between">
+                                        <a class="small text-white stretched-link" href="views/frontoffice/productos">VerDetalle</a>
+                                        <div class="small text-white"><i class="fas fa-angle-right"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-primary text-white mb-4">
-                                    <div class="card-body">Publicados <span class="big-number">${libros_aprobados}</span></div>
+                                    <div class="card-body">Publicados <span class="big-number">${Resumen.librosAprobados}</span></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="views/frontoffice/productos">VerDetalle</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
@@ -24,7 +33,7 @@
                             
                             <div class="col-xl-3 col-md-6">
                                 <div class="card bg-warning text-white mb-4">
-                                    <div class="card-body">Pendientes <span class="big-number">${libros_pendientes}</span></div>
+                                    <div class="card-body">Pendientes <span class="big-number">${Resumen.librosPendientes}</span></div>
                                     <div class="card-footer d-flex align-items-center justify-content-between">
                                         <a class="small text-white stretched-link" href="views/frontoffice/productos?validados=0">Ver Detalle</a>
                                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
