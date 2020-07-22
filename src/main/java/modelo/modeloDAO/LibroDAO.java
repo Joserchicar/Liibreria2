@@ -15,8 +15,6 @@ import modelo.pojo.ResumenUsuario;
  */
 
 public interface LibroDAO extends CRUDAble<Libro> {
-
-	
 	
 	/**
 	 * Validamos el libro para que sea visible en la parte publica
@@ -25,6 +23,25 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 */
 	void validar( int id );	
 	
+	/**
+	 * Eliminar un registro comprobando que pertenezca a un usuario concreto.
+	 * @param idLibro
+	 * @param idUsuario
+	 * @return Libro eliminado
+	 * @throws Exception 
+	 * 
+	 */
+	
+	Libro delete(int idLibro, int idUsuario) throws Exception;
+	/**
+	 * 
+	 * @param idLibro
+	 * @param idUsuario
+	 * @return
+	 * @throws Exception 
+	 */
+	
+	Libro getById(int idLibro,int idUsuario) throws Exception;
 	
 	/**
 	 * 

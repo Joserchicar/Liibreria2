@@ -94,14 +94,18 @@ public class Libro {
 	}
 
 	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
+		this.usuario=usuario;
+		
 	}
+	
 
 	@Override
 	public String toString() {
 		return "Libro [id=" + id + ", titulo=" + titulo + ", imagen=" + imagen + ", precio=" + precio + ", usuario="
 				+ usuario + ", genero=" + genero + "]";
 	}
+
+	
 
 	
 	
