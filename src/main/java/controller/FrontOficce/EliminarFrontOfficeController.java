@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 
@@ -13,6 +14,7 @@ import controller.Alerta;
 import controller.EliminarLibroController;
 import modelo.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Libro;
+import modelo.pojo.Usuario;
 
 /**
  * Servlet implementation class EliminarFrontOfficeController
@@ -21,7 +23,7 @@ import modelo.pojo.Libro;
 public class EliminarFrontOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG=Logger.getLogger(EliminarFrontOfficeController.class);
-	
+	private final static LibroDAOImpl daoLibro=LibroDAOImpl.getInstance();
 
 
 	/**
@@ -31,33 +33,32 @@ public class EliminarFrontOfficeController extends HttpServlet {
 		//Recoge parametro
 		
 				String parametroId = request.getParameter("id");
-				String parametroUsuario=request.getParameter("usuario");
+				LOG.trace("entramos en ELiminar Libro" + parametroId);
+				HttpSession session= request.getSession();
+				Alerta alerta=new Alerta();
+				Usuario usuario= new Usuario();
 				
+			try {	
+				
+				usuario=(Usuario)session.getAttribute("usuario_login");
 				int idLibro = Integer.parseInt(parametroId);
-				int idUsuario= Integer.parseInt(parametroUsuario);
+				int idUsuario= usuario.getId();
 				
-				// llamar modelo
-				LibroDAOImpl dao = LibroDAOImpl.getInstance(); // esto se tiene hecho con el  private final static librodao 
-				String mensaje  = "";
-				Libro libro = new Libro();
+				Libro l= daoLibro.delete(idLibro, idUsuario);
+				alerta = new Alerta ("success", "Libro" + l.getTitulo() + "ha sido eliminado");
 				
-				try {
-					libro= dao.delete(idLibro, idUsuario);
-					mensaje = "Eliminado " + libro.getTitulo();
-					
+				
 				} catch (Exception e) {
-					mensaje = "Error " + e.getMessage();
-					LOG.error(e);
 					
+					LOG.error(e);
+					alerta =new Alerta("danger","Error inexperado");
 				}finally {
 					
 					
-					// guardar datos en session para el mensaje de la vista
-					request.getSession().setAttribute("alerta",new Alerta("success",mensaje) );
-								
-					// pedimos al cliente que realize una segunda REQUEST
-					response.sendRedirect("inicioFrontOffice");
 					
+					session.setAttribute("alerta",alerta);
+								
+					request.getRequestDispatcher("inicioFrontOffice").forward(request, response);
 					
 				}
 	}
