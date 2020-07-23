@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.naming.NamingException;
 
@@ -80,10 +81,13 @@ public class LibroDAOImpl implements LibroDAO {
 			"";
 
 	private final String SQL_INSERT = " INSERT INTO libro (titulo, precio, imagen,id_usuario,genero_id) VALUES ( ?,?,?,1,? ) ; ";
-	private final String SQL_UPDATE = "UPDATE libro SET nombre=?, precio=?,imagen=?,genero_id=? WHERE id=? ; ";
-
+	
+	private final String SQL_UPDATE = "UPDATE libro SET titulo =?, precio=?,imagen=?,genero=?,id_usuario=?,fecha_Creacion =?,fecha_Validacion=? WHERE id=?;";
+	private final String SQL_UPDATE_BY_USER = "UPDATE libro SET titulo =?, precio=?,imagen=?,genero=?,fecha_Creacion =?,fecha_Validacion=? WHERE id=? AND id_usuario=?;";
+	
 	private final String SQL_DELETE = " DELETE FROM libro WHERE id = ? ; ";
 	private final String SQL_DELETE_BY_USER = "DELETE FROM libro WHERE id = ? AND id_usuario= ?; ";
+	
 	@Override
 	public void validar(int id) {
 		// TODO Auto-generated method stub
@@ -369,22 +373,37 @@ public class LibroDAOImpl implements LibroDAO {
 		// execute query
 
 		try (Connection conexion = ConnectionManager.getConnection();
-				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
+				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE_BY_USER, PreparedStatement.RETURN_GENERATED_KEYS);
 
 		) {
 
 			pst.setString(1, libro.getTitulo());
-			pst.setString(2, libro.getImagen());
-			pst.setFloat(3, libro.getPrecio());
-			pst.setInt(3, libro.getGenero().getId());
-			pst.setInt(5, libro.getId());
+			pst.setFloat(2, libro.getPrecio());
+			pst.setString(3, libro.getImagen());
+			pst.setInt(4, libro.getGenero().getId());
+			pst.setDate(5, libro.getFechaCreacion());
+			pst.setDate(6, libro.getFechaValidacion());
+			pst.setInt(7, libro.getId());
+			pst.setInt(8,libro.getUsuario().getId());
+			
 			LOG.debug(pst);
+			
 			int affectedRows = pst.executeUpdate();
 
 			if (affectedRows != 1) {
 
 				throw new Exception("No se puede podificar el registro con id=" + libro.getId());
 
+			}else {
+				Date fechaValidacion=libro.getFechaValidacion();
+				
+				if(fechaValidacion!= null) {
+					
+					
+					
+				}
+				
+				
 			}
 		}
 

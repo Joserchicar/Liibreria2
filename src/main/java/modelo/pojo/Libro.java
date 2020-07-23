@@ -1,5 +1,7 @@
 package modelo.pojo;
 
+import java.sql.Date;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
@@ -17,7 +19,10 @@ public class Libro {
 		private String  imagen;
 		
 		@Min( value = 0, message = "Debe ser positivo")
-		private float precio;
+		private float precio; 
+		
+		private Date fechaCreacion;
+		private Date fechaValidacion;
 		
 		private Usuario usuario;
 		
@@ -97,12 +102,29 @@ public class Libro {
 		this.usuario=usuario;
 		
 	}
-	
+
+
+	public Date getFechaCreacion() {
+		return fechaCreacion;
+	}
+
+	public void setFechaCreacion(Date fechaCreacion) {
+		this.fechaCreacion = fechaCreacion;
+	}
+
+	public Date getFechaValidacion() {
+		return fechaValidacion;
+	}
+
+	public void setFechaValidacion(Date fechaValidacion) {
+		this.fechaValidacion = fechaValidacion;
+	}
 
 	@Override
 	public String toString() {
-		return "Libro [id=" + id + ", titulo=" + titulo + ", imagen=" + imagen + ", precio=" + precio + ", usuario="
-				+ usuario + ", genero=" + genero + "]";
+		return "Libro [id=" + id + ", titulo=" + titulo + ", imagen=" + imagen + ", precio=" + precio
+				+ ", fechaCreacion=" + fechaCreacion + ", fechaValidacion=" + fechaValidacion + ", usuario=" + usuario
+				+ ", genero=" + genero + "]";
 	}
 
 	

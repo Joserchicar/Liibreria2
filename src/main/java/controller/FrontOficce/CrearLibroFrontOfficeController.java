@@ -42,6 +42,9 @@ public class CrearLibroFrontOfficeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		
+		
 		// Vamos al formulario y enviamos un producto inicializado
 
 		Libro l = new Libro();
