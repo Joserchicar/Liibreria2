@@ -1,4 +1,4 @@
-package modelo.modeloDAOImpl;
+package modelo.modeloDAO.modeloDAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
