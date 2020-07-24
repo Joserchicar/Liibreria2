@@ -1,7 +1,8 @@
-package modelo.seguridad;
+package seguridad;
+
+import java.io.IOException;
 
 import javax.servlet.DispatcherType;
-import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -18,18 +19,21 @@ import modelo.pojo.Rol;
 import modelo.pojo.Usuario;
 
 /**
- * Servlet Filter implementation class BackOfficeFilter
+ * Servlet Filter implementation class FrontOfficeFilter
  */
 @WebFilter(dispatcherTypes = { DispatcherType.REQUEST, DispatcherType.FORWARD, DispatcherType.INCLUDE,
-		DispatcherType.ERROR }, urlPatterns = { "/backoffice/*" })
+		DispatcherType.ERROR },
 
-public class BackOfficeFilter implements Filter {
+		urlPatterns = { "/frontoffice/*" })
+
+public class FrontOfficeFilter implements Filter {
 
 	private final static Logger LOG = Logger.getLogger(BackOfficeFilter.class);
 
 	/**
 	 * @see Filter#destroy()
 	 */
+
 	public void destroy() {
 		LOG.trace("se destruye filtro");
 	}
@@ -57,9 +61,9 @@ public class BackOfficeFilter implements Filter {
 			// res.sendRedirect( "login.jsp"); => ruta relativa, se no mete en un bucle
 			res.sendRedirect(urlInicioApp + "/views/login.jsp"); // ruta absoluta
 
-		} else if (usarioLogin.getRol().getId() != Rol.ADMINISTRADOR) {
+		} else if (usarioLogin.getRol().getId() != Rol.USUARIO) {
 
-			LOG.warn("Cuidado usuario sin privilegios de ADMINISTRADOR, SIN AUTORIZACION");
+			LOG.warn("Cuidado usuario sin privilegios de USUARIO, SIN AUTORIZACION");
 			res.sendRedirect(urlInicioApp + "/login.jsp");
 
 		} else {
