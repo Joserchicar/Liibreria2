@@ -19,7 +19,7 @@
 </ol>
 
 
-<c:forEach items="${generoConLibros}" var="g">
+<c:forEach items="${generosConLibros}" var="g">
 
 	<h4>${g.genero}</h4>
 	<hr>

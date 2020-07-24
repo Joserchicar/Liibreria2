@@ -59,7 +59,7 @@
 					aria-expanded="false">Generos</a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="inicio">TODOS</a>
-						<c:forEach items="${generos}" var="genero">
+						<c:forEach items="${applicationScope.generos}" var="genero">
 							<a class="dropdown-item"
 								href="inicio?idGenero=${genero.id}& genero=${genero.genero}">${genero.genero }</a>
 						</c:forEach>
@@ -71,7 +71,7 @@
 
 				<!-- opciones cuando el usuario esta Logeado -->
 
-				<c:if test="${ not empty usuario_login }">
+				<c:if test="${ not empty sessionScope.usuario_login }">
 
 					<li class="nav-item"><a
 						class="nav-link ${ ( 'Libros' eq param.pagina ) ? 'active' : '' } "
@@ -85,10 +85,10 @@
 			</ul>
 
 			<span class="form-inline"> <c:if
-					test="${ empty usuario_login }">
+					test="${ empty sessionScope.usuario_login }">
 					<a class="nav-link  btn btn-outline-warning" href="Login.jsp">Iniciar
 						Sesión</a>
-				</c:if> <c:if test="${ not empty usuario_login }">
+				</c:if> <c:if test="${ not empty sessionScope.usuario_login }">
 					<span class="badge badge-pill badge-light mr-3">${usuario_login.nombre}</span>
 					<a class="nav-link  btn btn-outline-light" href="Logout">Cerrar
 						Sesión</a>
