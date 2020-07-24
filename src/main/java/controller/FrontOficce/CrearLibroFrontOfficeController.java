@@ -18,7 +18,7 @@ import javax.validation.ValidatorFactory;
 import org.apache.log4j.Logger;
 
 import controller.Alerta;
-import modelo.modeloDAOImpl.LibroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Genero;
 import modelo.pojo.Libro;
 import modelo.pojo.Usuario;

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import modelo.modeloDAOImpl.LibroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Libro;
 import modelo.pojo.Usuario;
 

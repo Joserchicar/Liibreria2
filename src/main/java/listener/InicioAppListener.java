@@ -8,7 +8,7 @@ import javax.servlet.annotation.WebListener;
 import org.apache.log4j.Logger;
 
 import controller.Alerta;
-import modelo.modeloDAOImpl.GeneroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.GeneroDAOImpl;
 
 /**
  * Application Lifecycle Listener implementation class InicioAppListenner

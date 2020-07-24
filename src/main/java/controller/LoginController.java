@@ -5,14 +5,12 @@ import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.modeloDAO.UsuarioDAO;
-import modelo.modeloDAOImpl.UsuarioDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.UsuarioDAOImpl;
 import modelo.pojo.Rol;
 import modelo.pojo.Usuario;
 

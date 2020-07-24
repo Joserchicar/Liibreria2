@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Set;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,11 +14,10 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-
 import org.apache.log4j.Logger;
 
-import modelo.modeloDAOImpl.GeneroDAOImpl;
-import modelo.modeloDAOImpl.LibroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.GeneroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Genero;
 import modelo.pojo.Libro;
 

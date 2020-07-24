@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-
-import modelo.modeloDAOImpl.GeneroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.GeneroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Genero;
 
 /**

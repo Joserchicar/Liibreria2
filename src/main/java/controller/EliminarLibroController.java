@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
-import modelo.modeloDAOImpl.LibroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Libro;
 
 /**

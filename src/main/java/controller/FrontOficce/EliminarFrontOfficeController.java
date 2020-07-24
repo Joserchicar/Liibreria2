@@ -1,6 +1,7 @@
 package controller.FrontOficce;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,8 +12,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import controller.Alerta;
-import controller.EliminarLibroController;
-import modelo.modeloDAOImpl.LibroDAOImpl;
+import modelo.modeloDAO.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Libro;
 import modelo.pojo.Usuario;
 
