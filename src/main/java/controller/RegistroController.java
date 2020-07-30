@@ -157,7 +157,7 @@ public class RegistroController extends HttpServlet {
 
 			// ir a la nueva vista o jsp
 
-			request.getRequestDispatcher("registro.jsp").forward(request, response);
+			request.getRequestDispatcher("views/productos/formulario.jsp").forward(request, response);
 		} // trycatch
 
 	}

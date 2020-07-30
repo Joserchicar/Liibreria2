@@ -42,40 +42,48 @@ public class InicioController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
-		ArrayList<Libro> libros = new ArrayList<Libro>();
-		ArrayList<Genero> generosConLibros = new ArrayList<Genero>();
-
+		// parametros
 		String paramIdGenero = request.getParameter("idGenero");
 		String paramGenGenero = (request.getParameter("genero") == null) ? " todos los generos"
 				: request.getParameter("genero");
-
+		
+		//Inicializar atributos a retornar a la vista
+		
+		ArrayList<Libro> libros = new ArrayList<Libro>();
+		ArrayList<Genero> generosConLibros = new ArrayList<Genero>();
+		String encabezado ="";
+		
+		
 		if (TODOS_LOS_GENEROS.equals(paramIdGenero)) {
 
 			generosConLibros = generoDAO.getAllLibros();
-			libros = null;
-			request.setAttribute("encabezado", "todos loslibros por genero");
+			//libros = null;
+			encabezado = "Todos los Productos por Categoria";
+			//request.setAttribute("encabezado", "todos loslibros por genero");
 
 		} else {
 
-			generosConLibros = null;
-
-			if (paramIdGenero != null) {
-
+			// obtengo los libros
 				int idGenero = Integer.parseInt(paramIdGenero);
-				libros = libroDAO.getAllByGenero(idGenero, 10);
-
-			} else {
-
-				libros = libroDAO.getLast(10);
-
-			}
-
-			request.setAttribute("encabezado",
-					"<b>" + libros.size() + "</b> Útimos libross de <b>" + paramGenGenero + "</b>");
+				 libros = libroDAO.getAllByGenero( idGenero, 10);
+							
+			//crear Categoria para añadir los productos			
+				Genero g = new Genero();			 
+				g.setId(idGenero);
+				g.setGenero(paramGenGenero);			
+				g.setLibros(libros);
+						
+			// guardar en el array la categoria
+				generosConLibros.add(g);
+						
+			encabezado = "<b>" + libros.size() + "</b> Útimos libros de <b>" + paramGenGenero + "</b>" ;
+							
+					
+			//request.setAttribute("encabezado","<b>" + libros.size() + "</b> Útimos libross de <b>" + paramGenGenero + "</b>");
 
 		}
-		request.setAttribute("libros", libros);
+		
+		request.setAttribute("encabezado", encabezado);
 		request.setAttribute("generosConLibros", generosConLibros);
 
 		request.getRequestDispatcher("index.jsp").forward(request, response);

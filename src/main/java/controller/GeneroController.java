@@ -29,12 +29,12 @@ public class GeneroController extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response) * @paramter id id Genero
-	 * @paremter operacion para saber si queremos eliminar IR FORMULARIO => Si
-	 *           recibimos como parametro el id del Genero, iremos al formulario
-	 *           para poder guardarla ELIMNAR CATEGORIA => Si recibimos como
-	 *           parametros el id del genero y operacion == 2, Eliminamos el Genero
-	 *           y vamos a la tabla MOSTRAR TABLA => Si id categoria es null
-	 *           mostramos la tabla con todas
+	 * @paremter operacion para saber si queremos eliminar 
+	 * IR FORMULARIO => Si recibimos como parametro el id del Genero, iremos al formulario
+	 *           para poder guardarla 
+	 * ELIMNAR CATEGORIA => Si recibimos como parametros el id del genero y operacion == 2, Eliminamos el Genero
+	 *           y vamos a la tabla 
+	 * MOSTRAR TABLA => Si id categoria es null mostramos la tabla con todas
 	 * 
 	 * 
 	 */
@@ -76,7 +76,7 @@ public class GeneroController extends HttpServlet {
 
 			request.setAttribute("alerta", alerta);
 			request.setAttribute("genero", genero);
-			request.setAttribute("categorias", generoDao.getAll());
+			request.setAttribute("generos", generoDao.getAll());
 			request.getRequestDispatcher(view).forward(request, response);
 		}
 

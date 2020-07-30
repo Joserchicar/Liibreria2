@@ -26,11 +26,11 @@ import modelo.pojo.Usuario;
 /**
  * Servlet implementation class CrearLibroFrontOfficeController
  */
-@WebServlet("/CrearLibroFrontOffice")
-public class CrearLibroFrontOfficeController extends HttpServlet {
+@WebServlet("/views/frontoffice/guardar-producto")
+public class GuardarLibroFrontOfficeController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private final static Logger LOG = Logger.getLogger(CrearLibroFrontOfficeController.class);
+	private final static Logger LOG = Logger.getLogger(GuardarLibroFrontOfficeController.class);
 	private final static LibroDAOImpl daoLibro = LibroDAOImpl.getInstance();
 
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();

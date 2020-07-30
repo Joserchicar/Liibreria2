@@ -18,7 +18,7 @@ import modelo.pojo.Usuario;
 /**
  * Servlet implementation class LibrosFrontOfficeController
  */
-@WebServlet("/LibrosFrontOffice")
+@WebServlet("/views/frontoffice/Libros")
 public class LibrosFrontOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG = Logger.getLogger(LibrosFrontOfficeController.class);

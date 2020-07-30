@@ -21,7 +21,7 @@ import modelo.conexion.ConnectionManager;
 /**
  * Servlet implementation class inicioFrontOfficeController
  */
-@WebServlet("/inicioBacktOffice")
+@WebServlet("/views/backoffice/migracion")
 public class MigracionBackOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG = Logger.getLogger(MigracionBackOfficeController.class);   

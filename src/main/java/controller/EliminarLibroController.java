@@ -52,7 +52,7 @@ public class EliminarLibroController extends HttpServlet {
 			request.getSession().setAttribute("alerta",new Alerta("success",mensaje) );
 						
 			// pedimos al cliente que realize una segunda REQUEST
-			response.sendRedirect("inicio");
+			response.sendRedirect("libros");
 			
 			
 		}

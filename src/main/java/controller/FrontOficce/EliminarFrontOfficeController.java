@@ -19,7 +19,7 @@ import modelo.pojo.Usuario;
 /**
  * Servlet implementation class EliminarFrontOfficeController
  */
-@WebServlet("/EliminarFrontOffice")
+@WebServlet("/views/frontoffice/eliminar")
 public class EliminarFrontOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG=Logger.getLogger(EliminarFrontOfficeController.class);

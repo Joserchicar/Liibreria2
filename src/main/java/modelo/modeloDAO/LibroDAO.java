@@ -76,7 +76,7 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 * @param numReg   int numero de registgros a mostrar
 	 * @return ArrayList<Libro>
 	 */
-	ArrayList<Libro> getAllByGenero(int idGenero, int numReg);
+	
 
 	/**
 	 * 

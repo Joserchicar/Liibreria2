@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
 /**
  * Servlet implementation class inicioFrontOfficeController
  */
-@WebServlet("/inicioBacktOffice")
+@WebServlet("/views/backoffice/inicio")
 public class inicioBackOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG = Logger.getLogger(inicioBackOfficeController.class);   
