@@ -43,9 +43,10 @@ public class CrawlerController extends HttpServlet {
 	}
 
 	/**
+	 * @param genero 
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response, String genero) throws ServletException, IOException {
 		int cont = 0;
 		int contError = 0;
 		Usuario usuario = null;
@@ -91,7 +92,7 @@ public class CrawlerController extends HttpServlet {
 					
 					g = new Genero();
 					g.setId(idGenero);
-					g.setGenero(g);
+					g.setGenero(genero);
 					
 					u = new Usuario();
 					u.setId( usuario.getId() );
