@@ -123,7 +123,7 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 * @throws Exception
 	 * @throws SeguridadException
 	 */
-	Libro updateByUser( Libro l) throws Exception, SeguridadException;
+	void updateByUser( Libro l) throws Exception, SeguridadException;
 	
 	
 	
