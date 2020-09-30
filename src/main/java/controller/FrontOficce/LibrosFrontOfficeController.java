@@ -22,8 +22,7 @@ import modelo.pojo.Usuario;
 public class LibrosFrontOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG = Logger.getLogger(LibrosFrontOfficeController.class);
-	private final static LibroDAOImpl daoLibro=LibroDAOImpl.getInstance();
-	
+	private final static LibroDAOImpl daoLibro = LibroDAOImpl.getInstance();
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -34,36 +33,33 @@ public class LibrosFrontOfficeController extends HttpServlet {
 
 		String validados = request.getParameter("validados");
 		String titulo = "";
-		ArrayList<Libro> libros=new ArrayList<Libro>();
-		
-		try {
-			
-		Usuario usuarioSession=(Usuario)request.getSession().getAttribute("usuario_login");	
-		
-		 // comprobar esto
-		int idUsuario = 0;
-		
-		if (validados == null) {
-			titulo = "Libros Validados";
-			libros=daoLibro.getAllByUser(idUsuario, true);
-		} else {
-			titulo = "Libros Pendientes de Validar";
-			libros= daoLibro.getAllByUser(idUsuario, false);
-		}
+		ArrayList<Libro> libros = new ArrayList<Libro>();
 
-		}catch (Exception e) {
+		try {
+
+			Usuario usuarioSession = (Usuario) request.getSession().getAttribute("usuario_login");
+
+			int idUsuario = usuarioSession.getId();
+
+			if (validados == null) {
+				titulo = "Libros Validados";
+				libros = daoLibro.getAllByUser(idUsuario, true);
+			} else {
+				titulo = "Libros Pendientes de Validar";
+				libros = daoLibro.getAllByUser(idUsuario, false);
+			}
+
+		} catch (Exception e) {
 			LOG.error(e);
-		}finally {
-			
+		} finally {
+
 			request.setAttribute("libros", libros);
 			request.setAttribute("titulo", titulo);
 			request.getRequestDispatcher("Libro.jsp").forward(request, response);
 
-
 		}
-		
-		
-			}
+
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse

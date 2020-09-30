@@ -44,9 +44,12 @@ public class Genero {
 	public String toString() {
 		return "Genero [id=" + id + ", genero=" + genero + "]";
 	}
+
+
+		
+	}
 	
 	
 	
 	
 	
-}

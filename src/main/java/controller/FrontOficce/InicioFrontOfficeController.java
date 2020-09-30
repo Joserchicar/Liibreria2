@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.log4j.Logger;
 
 import modelo.modeloDAOImpl.LibroDAOImpl;
+import modelo.pojo.ResumenUsuario;
 import modelo.pojo.Usuario;
 
 /**
@@ -34,14 +35,14 @@ public class InicioFrontOfficeController extends HttpServlet {
 		Usuario usuarioSession = (Usuario) request.getSession().getAttribute("usuario_login");
 		int idUsuario = usuarioSession.getId();
 
-		// TODO recuperar datos de una VIEW
+		//  recuperar datos de una VIEW
 
 		// ArrayList<Producto> aprobados = daoProducto.getAllByUser( idUsuario, true);
 		// ArrayList<Producto> pendientes = daoProducto.getAllByUser( idUsuario, false);
 		// request.setAttribute("productos_aprobados", aprobados.size() );
 		// request.setAttribute("productos_pendientes", pendientes.size() );
 
-		modelo.pojo.ResumenUsuario resumen = daoLibro.getResumenByUsuario(idUsuario);
+		ResumenUsuario resumen = daoLibro.getResumenByUsuario(idUsuario);
 		request.setAttribute("resumen", resumen);
 
 		// request.setAttribute("libros_aprobados", 3);

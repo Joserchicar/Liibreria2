@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 
 import modelo.conexion.ConnectionManager;
 import modelo.modeloDAO.LibroDAO;
+import modelo.modeloDAO.SeguridadException;
 import modelo.pojo.Genero;
 import modelo.pojo.Libro;
 import modelo.pojo.ResumenUsuario;
@@ -35,15 +36,15 @@ public class LibroDAOImpl implements LibroDAO {
 
 		return INSTANCE;
 	}
+	
+	private final String SELECT_CAMPOS = "SELECT u.id 'usuario_id', u.nombre 'usuario_nombre', l.id  'libro_id', l.nombre 'libro_nombre', precio, imagen, g.id 'genero_id', g.genero 'genero' ";
+	private final String FROM_INNER_JOIN = " FROM libro l , genero g, usuario u WHERE p.id_genero  = g.id AND l.id_usuario = u.id  ";
+	
 
 	// SQL executeQuery => ResultSet
-	private final String SQL_GET_ALL = "SELECT" + "l.id  'libro_id'," + "titulo , " + "l.imagen 'imagen',"
-			+ "l.precio 'precio'," + "g.id  'genero_id'," + "g.genero 'genero' " + "FROM libro l,genero g "
-			+ "WHERE l.genero = g.id " + "ORDER BY l.id ASC LIMIT 500;";
+	private final String SQL_GET_ALL = SELECT_CAMPOS + FROM_INNER_JOIN + " AND fecha_validado IS NOT NULL " + " ORDER BY l.id DESC LIMIT 500; ";
 
-	private final String SQL_GET_LAST = "SELECT" + " l.id  'libro_id', " + " titulo ," + "l.imagen 'imagen',"
-			+ "l.precio 'precio'," + " g.id  'genero_id'," + "g.genero 'genero_genero' " + " FROM libro l,genero g "
-			+ " WHERE l.genero = g.id " + " ORDER BY l.id ASC LIMIT ? ; ";
+	private final String SQL_GET_LAST = SELECT_CAMPOS + FROM_INNER_JOIN + " AND fecha_validado IS NOT NULL " + " ORDER BY l.id DESC LIMIT ? ; ";
 
 	private final String SQL_GET_BY_GENERO = "SELECT" + " l.id  'libro_id', " + " titulo ," + "l.imagen 'imagen',"
 			+ "l.precio 'precio'," + " g.id  'genero_id'," + "g.genero 'genero_genero' " + " FROM libro l,genero g "
@@ -452,4 +453,45 @@ public class LibroDAOImpl implements LibroDAO {
 
 	}
 
+	public void updateByUser(Libro l) {
+		try (Connection conexion = ConnectionManager.getConnection();
+				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE_BY_USER);
+
+		) {
+			int idLibro= l.getId();
+			int idUsuario = l.getUsuario().getId();
+			
+			checkSeguridad(idLibro, idUsuario); 
+			
+			pst.setString(1, l.getTitulo());
+			pst.setString(2, l.getImagen());
+			pst.setFloat(3, l.getPrecio());
+			pst.setInt(4, l.getGenero().getId());
+			pst.setInt(5, l.getId());
+			LOG.debug(pst);
+			
+			int affectedRows = pst.executeUpdate();
+			if (affectedRows != 1) {
+				throw new Exception("No se puede podificar el registro con id=" + l.getId());
+			}
+
+		}
+
+		return l;
+	}
+	
+
+	@Override
+	public Libro checkSeguridad(int idLibro, int idUsuario) throws Exception, SeguridadException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Libro> getAllByNombre(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 }

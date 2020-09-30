@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 
 import controller.Alerta;
-import controller.EliminarLibroController;
 import modelo.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Libro;
 import modelo.pojo.Usuario;
@@ -58,7 +57,7 @@ public class EliminarFrontOfficeController extends HttpServlet {
 					
 					session.setAttribute("alerta",alerta);
 								
-					request.getRequestDispatcher("inicioFrontOffice").forward(request, response);
+					request.getRequestDispatcher("/views/frontoffice/inicioFrontOffice").forward(request, response);
 					
 				}
 	}

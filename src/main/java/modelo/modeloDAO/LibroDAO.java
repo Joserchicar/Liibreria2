@@ -2,6 +2,8 @@ package modelo.modeloDAO;
 
 import java.util.ArrayList;
 
+import javax.security.sasl.SaslException;
+
 import modelo.pojo.CRUDAble;
 import modelo.pojo.Libro;
 import modelo.pojo.ResumenUsuario;
@@ -33,6 +35,23 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 */
 	
 	Libro delete(int idLibro, int idUsuario) throws Exception;
+	
+	/**
+	 * Comprueba que el Producto pertenezca al Usuario
+	 * @param idProducto
+	 * @param idUsuario
+	 * @return Producto pertenecinte al idUsuario
+	 * @throws Exception
+	 * @throws SeguridadException si no pertenece el producto al Usuario
+	 */
+	Libro checkSeguridad(int idLibro, int idUsuario) throws Exception, SeguridadException;
+	
+	/**
+	 * 
+	 * @param nombre
+	 * @return
+	 */
+	ArrayList<Libro> getAllByNombre( String nombre );
 	/**
 	 * 
 	 * @param idLibro
@@ -76,6 +95,7 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 * @param numReg   int numero de registgros a mostrar
 	 * @return ArrayList<Libro>
 	 */
+	ArrayList<Libro> getAllByGenero( int idGenero, int numReg );
 	
 
 	/**
@@ -94,6 +114,16 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 * @return ResumenUsuario
 	 */
 	ResumenUsuario getResumenByUsuario(int idUsuario);
+	
+	/**
+	 * Modifica un producto un Usuario normal, el cual no es Administrador.
+	 * El producto vuelve a estar pendiente de Validación
+	 * @param p Producto
+	 * @return Producto validao
+	 * @throws Exception
+	 * @throws SeguridadException
+	 */
+	Libro updateByUser( Libro l) throws Exception, SeguridadException;
 	
 	
 	
