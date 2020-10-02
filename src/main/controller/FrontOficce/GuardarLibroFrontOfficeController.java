@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.sql.SQLException;
 import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,13 +19,11 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+
 import org.apache.log4j.Logger;
 
-import com.ipartek.formacion.modelo.pojo.Categoria;
-import com.ipartek.formacion.modelo.pojo.Producto;
-
 import controller.Alerta;
-import modelo.dao.SeguridadException;
+import modelo.modeloDAO.SeguridadException;
 import modelo.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Genero;
 import modelo.pojo.Libro;
@@ -40,11 +38,11 @@ public class GuardarLibroFrontOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG = Logger.getLogger(GuardarLibroFrontOfficeController.class);
 	private final static LibroDAOImpl daoLibro = LibroDAOImpl.getInstance();
-	private static final String PATH_FICHERO = null;
+	private static String PATH_FICHERO =  "/home/javaee/eclipse-workspace/libreria/src/main/webapp/imagenes/";
 
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private static Validator validator = factory.getValidator();
-
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -126,7 +124,7 @@ try {
 			// crear objeto con esos parametros
 			l.setId(idLibro);
 			l.setTitulo(titulo);
-			String fichNombre =  filePart.getSubmittedFileName();
+			String fichNombre =filePart.getSubmittedFileName();
 			l.setImagen( "imagenes/" + fichNombre);
 			//l.setImagen(imagen);
 			l.setPrecio(precioFloat);

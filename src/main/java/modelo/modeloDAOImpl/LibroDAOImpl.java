@@ -452,16 +452,25 @@ public class LibroDAOImpl implements LibroDAO {
 		return l;
 
 	}
-
-	public void updateByUser(Libro l) {
+	
+	public Libro updateByUser(Libro l) throws Exception {
 		try (Connection conexion = ConnectionManager.getConnection();
 				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE_BY_USER);
 
 		) {
+			 l= new Libro();
 			int idLibro= l.getId();
 			int idUsuario = l.getUsuario().getId();
 			
-			checkSeguridad(idLibro, idUsuario); 
+			try {
+				checkSeguridad(idLibro, idUsuario);
+			} catch (SeguridadException e) {
+				LOG.error(e);
+				e.printStackTrace();
+			} catch (Exception e) {
+				LOG.error(e);
+				e.printStackTrace();
+			} 
 			
 			pst.setString(1, l.getTitulo());
 			pst.setString(2, l.getImagen());
@@ -475,6 +484,15 @@ public class LibroDAOImpl implements LibroDAO {
 				throw new Exception("No se puede podificar el registro con id=" + l.getId());
 			}
 
+		} catch (ClassNotFoundException e) {
+			LOG.error(e);
+			e.printStackTrace();
+		} catch (SQLException e) {
+			LOG.error(e);
+			e.printStackTrace();
+		} catch (NamingException e) {
+			LOG.error(e);
+			e.printStackTrace();
 		}
 
 		return l;

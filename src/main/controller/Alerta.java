@@ -2,10 +2,9 @@ package controller;
 
 public class Alerta {
 
-	
 	private String tipo;
 	private String texto;
-	
+
 	public Alerta() {
 		super();
 		this.texto = "";
@@ -38,6 +37,5 @@ public class Alerta {
 	public String toString() {
 		return "Alerta [tipo=" + tipo + ", texto=" + texto + "]";
 	}
-	
-	
+
 }

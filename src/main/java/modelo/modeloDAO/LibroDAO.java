@@ -10,9 +10,15 @@ import modelo.pojo.ResumenUsuario;
 
 /**
  * Hereda los metodos basicos de la interfaz CrudAble Ademas definie un nuevo:
- * ArrayList<Libro> getAllByTitulo( String titulo )
+ * {@code ArrayList<libro> getAllByTitulo(String titulo)}
+ *  Ademas incluye los metodos: 
+ * void validar( int id ),
+ * Libro checkSeguridad(int idLibro, int idUsuario),
+ * Libro getById(int idLibro,int idUsuario),
+ * {@code ArrayList<Libro> getLast(int numReg)},
+ * {@ code ArrayList<Libro>getAllRangoPrecio(int precioMinimo,int precioMaximo)}
  * 
- * @author javaee
+ * @author Joserra
  *
  */
 
@@ -20,52 +26,52 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	
 	/**
 	 * Validamos el libro para que sea visible en la parte publica
-	 * @param id identificador del libro
+	 * @param id  int id identificador del libro
 	 * 
 	 */
 	void validar( int id );	
 	
 	/**
 	 * Eliminar un registro comprobando que pertenezca a un usuario concreto.
-	 * @param idLibro
-	 * @param idUsuario
+	 * @param idLibro int id del libro a borrar
+	 * @param idUsuario int id del usuario
 	 * @return Libro eliminado
-	 * @throws Exception 
+	 * @throws Exception  excepcion general
 	 * 
 	 */
 	
 	Libro delete(int idLibro, int idUsuario) throws Exception;
 	
 	/**
-	 * Comprueba que el Producto pertenezca al Usuario
-	 * @param idProducto
-	 * @param idUsuario
-	 * @return Producto pertenecinte al idUsuario
+	 * Comprueba que el Libro pertenezca al Usuario
+	 * @param idLibro int id del libro
+	 * @param idUsuario	int id del usuario  
+	 * @return Libro pertenecinte al idUsuario
 	 * @throws Exception
-	 * @throws SeguridadException si no pertenece el producto al Usuario
+	 * @throws SeguridadException si no pertenece el libro al Usuario
 	 */
 	Libro checkSeguridad(int idLibro, int idUsuario) throws Exception, SeguridadException;
 	
 	/**
 	 * 
-	 * @param nombre
-	 * @return
+	 * @param nombre String titulos de los libros 
+	 * @return {@code ArrayList<libros> } ordenados por titulo
 	 */
 	ArrayList<Libro> getAllByNombre( String nombre );
 	/**
 	 * 
-	 * @param idLibro
-	 * @param idUsuario
-	 * @return
-	 * @throws Exception 
+	 * @param idLibro int id del libro 
+	 * @param idUsuario int id del usuario
+	 * @return Libro
+	 * @throws Exception general
 	 */
 	
 	Libro getById(int idLibro,int idUsuario) throws Exception;
 	
 	/**
 	 * 
-	 * @param titulo
-	 * @return
+	 * @param titulo String titulo de los libros
+	 * @return {@code ArrayList<libros> } ordenados por titulo
 	 */
 	ArrayList<Libro> getAllByTitulo(String titulo);
 
@@ -74,7 +80,7 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 * Obtiene lo libros de un usuario.Pueden estar validados o no.
 	 * @param idUsuario int identificador del usuario
 	 * @param isValidado boolean true para mostrar los  libros con fecha_validacion, false para mostrar los pendientes de validar
-	 * @return
+	 * @return {@code ArrayList<libros> } validados o no validados
 	 */
 	
 	ArrayList<Libro>getAllByUser(int idUsuario,boolean isValidado);
@@ -84,33 +90,33 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	 * Obtiene los ultimos registros ordenador por id descentente
 	 * 
 	 * @param numReg int numero de registros a recuperar
-	 * @return ArrayList<Libro>
+	 * @return {@code ArrayList<libros> } 
 	 */
 	ArrayList<Libro> getLast(int numReg);
 
 	/**
-	 * Obtienes los libros de un Genero
-	 * 
+	 * Obtienes los librospertenecientes a un genero
+	 * 	 
 	 * @param idGenero int identificador del Genero
 	 * @param numReg   int numero de registgros a mostrar
-	 * @return ArrayList<Libro>
+	 * @return {@code ArrayList<libros> } 
 	 */
 	ArrayList<Libro> getAllByGenero( int idGenero, int numReg );
 	
 
 	/**
 	 * 
-	 * @param precioMinimo
-	 * @param precioMaximo
-	 * @return
-	 * @throws Exception
+	 * @param precioMinimo int el precio minimo del rango
+	 * @param precioMaximo int el precio maximo del rango
+	 *@return {@code ArrayList<libros> } dentro del rango del precio de los parametros
+	 * @throws Exception general
 	 */
 	ArrayList<Libro>getAllRangoPrecio(int precioMinimo,int precioMaximo) throws Exception;;
 	
 	/**
-	 * Obtiene los datos estaisticos del usuario y sus libros
-	 * @see ResumenUsuario
-	 * @param idUsuario
+	 * Obtiene los datos estadisticos del usuario y sus libros
+	 * @see ResumenUsuario 
+	 * @param idUsuario int id del usuario
 	 * @return ResumenUsuario
 	 */
 	ResumenUsuario getResumenByUsuario(int idUsuario);
@@ -118,12 +124,12 @@ public interface LibroDAO extends CRUDAble<Libro> {
 	/**
 	 * Modifica un producto un Usuario normal, el cual no es Administrador.
 	 * El producto vuelve a estar pendiente de Validación
-	 * @param p Producto
-	 * @return Producto validao
+	 * @param   l  objeto Libro 
+	 * @return Libro  validado
 	 * @throws Exception
 	 * @throws SeguridadException
 	 */
-	void updateByUser( Libro l) throws Exception, SeguridadException;
+	Libro updateByUser( Libro l) throws Exception, SeguridadException;
 	
 	
 	

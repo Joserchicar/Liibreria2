@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 
 import modelo.conexion.ConnectionManager;
 import modelo.modeloDAO.GeneroDAO;
+import modelo.modeloDAO.SeguridadException;
 import modelo.pojo.Genero;
 import modelo.pojo.Libro;
 
@@ -140,6 +141,8 @@ public class GeneroDAOImpl implements GeneroDAO {
 	}
 
 	@Override
+	
+	
 	public Genero delete(int id) throws Exception {
 
 		Genero genero = null;
@@ -161,6 +164,8 @@ public class GeneroDAOImpl implements GeneroDAO {
 	}
 
 	@Override
+	
+	
 	public Genero insert(Genero genero) throws Exception {
 		
 		try(
@@ -189,6 +194,7 @@ public class GeneroDAOImpl implements GeneroDAO {
 	}
 
 	@Override
+	
 	public Genero update(Genero pojo) throws Exception {
 		throw new Exception("Sin implementar de momento");
 	}

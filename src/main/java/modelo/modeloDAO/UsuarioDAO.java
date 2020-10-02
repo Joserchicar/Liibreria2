@@ -8,9 +8,9 @@ import java.util.ArrayList;
 public interface UsuarioDAO extends CRUDAble<Usuario> {
 
 	/**
-	 * Busca alumnos que contengan la palabraBuscada
+	 * Busca usuarios que contengan la palabraBuscada
 	 * @param palabraBuscada palabra a buscar
-	 * @return ArrayList<Alumno>
+	 * @return {@code ArrayList<usuario>}
 	 * 
 	 * Ej: si palabraBuscada = "a"   <br>
 	 *     lista [ "ander", "pepe", "manolo"] <br>
@@ -25,7 +25,7 @@ public interface UsuarioDAO extends CRUDAble<Usuario> {
 	
 	
 	/**
-	 * Busca si existe el usuario en la base datsos
+	 * Busca si existe el usuario en la base datos
 	 * @param nombre
 	 * @param contrasenia
 	 * @return Usuario con datos si lo encuentra, si no existe retorna null

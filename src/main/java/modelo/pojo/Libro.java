@@ -6,7 +6,14 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-
+/**
+ *  Libro.java  pojo del objeto libro
+ * @author joserra
+ * @Version 1.0
+ * @see modelo.pojoGenero sobre genros de los libros
+ * @ see Usuario usuario a quien pertenece el libro
+ * 
+ */
 public class Libro {
 	
 		private int id;
