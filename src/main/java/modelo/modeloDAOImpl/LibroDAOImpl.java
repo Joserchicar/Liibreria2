@@ -1,5 +1,6 @@
 package modelo.modeloDAOImpl;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -36,19 +37,22 @@ public class LibroDAOImpl implements LibroDAO {
 
 		return INSTANCE;
 	}
-	
+
 	private final String SELECT_CAMPOS = "SELECT u.id 'usuario_id', u.nombre 'usuario_nombre', l.id  'libro_id', l.nombre 'libro_nombre', precio, imagen, g.id 'genero_id', g.genero 'genero' ";
 	private final String FROM_INNER_JOIN = " FROM libro l , genero g, usuario u WHERE p.id_genero  = g.id AND l.id_usuario = u.id  ";
-	
 
 	// SQL executeQuery => ResultSet
-	private final String SQL_GET_ALL = SELECT_CAMPOS + FROM_INNER_JOIN + " AND fecha_validado IS NOT NULL " + " ORDER BY l.id DESC LIMIT 500; ";
+	private final String SQL_GET_ALL = SELECT_CAMPOS + FROM_INNER_JOIN + " AND fecha_validado IS NOT NULL "
+			+ " ORDER BY l.id DESC LIMIT 500; ";
 
-	private final String SQL_GET_LAST = SELECT_CAMPOS + FROM_INNER_JOIN + " AND fecha_validado IS NOT NULL " + " ORDER BY l.id DESC LIMIT ? ; ";
+	private final String SQL_GET_LAST = SELECT_CAMPOS + FROM_INNER_JOIN + " AND fecha_validado IS NOT NULL "
+			+ " ORDER BY l.id DESC LIMIT ? ; ";
 
-	private final String SQL_GET_BY_GENERO = "SELECT" + " l.id  'libro_id', " + " titulo ," + "l.imagen 'imagen',"
-			+ "l.precio 'precio'," + " g.id  'genero_id'," + "g.genero 'genero_genero' " + " FROM libro l,genero g "
-			+ " WHERE l.genero = g.id " + " ORDER BY g.id ASC LIMIT ? ; ";
+	// private final String SQL_GET_BY_GENERO = "SELECT" + " l.id 'libro_id', " + "
+	// titulo ," + "l.imagen 'imagen',"
+	// + "l.precio 'precio'," + " g.id 'genero_id'," + "g.genero 'genero_genero' " +
+	// " FROM libro l,genero g "
+	// + " WHERE l.genero = g.id " + " ORDER BY g.id ASC LIMIT ? ; ";
 
 	private final String SQL_VIEW_RESUMEN_USUARIO = "SELECT id_usuario," + "total," + "aprobado," + "pendiente "
 			+ "FROM v_usuario_libro " + "WHERE id_usuario ;";
@@ -71,6 +75,8 @@ public class LibroDAOImpl implements LibroDAO {
 	private final String SQL_GET_BY_ID_USER = "SELECT l.id  'libro_id'," + "  titulo ," + "l.imagen 'imagen',"
 			+ "l.precio 'precio'," + "g.id  'genero_id'," + "g.genero 'genero' " + "FROM libro l,genero g "
 			+ "WHERE l.genero = g.id " + "AND l.id=8 " + "AND id_Usuario=1" + " LIMIT 500;" + "";
+
+	private final String PA_GET_BY_GENERO = "{pa_libros_por_genero(?,?) }";
 
 	private final String SQL_INSERT = " INSERT INTO libro (titulo, precio, imagen,id_usuario,genero_id) VALUES ( ?,?,?,1,? ) ; ";
 
@@ -189,13 +195,15 @@ public class LibroDAOImpl implements LibroDAO {
 		ArrayList<Libro> registros = new ArrayList<Libro>();
 
 		try (Connection conexion = ConnectionManager.getConnection();
-				PreparedStatement pst = conexion.prepareStatement(SQL_GET_BY_GENERO)) {
+				// PreparedStatement pst = conexion.prepareStatement(PA_GET_BY_GENERO)) {
+				CallableStatement cs = conexion.prepareCall(PA_GET_BY_GENERO)) {
 
-			pst.setInt(1, idGenero);
-			pst.setInt(2, numReg);
-			try (ResultSet rs = pst.executeQuery()) {
+			cs.setInt(1, idGenero);
+			cs.setInt(2, numReg);
+			LOG.debug(cs);
 
-				LOG.debug(pst);
+			try (ResultSet rs = cs.executeQuery()) {
+
 				while (rs.next())
 					registros.add(mapper(rs));
 			}
@@ -452,16 +460,16 @@ public class LibroDAOImpl implements LibroDAO {
 		return l;
 
 	}
-	
+
 	public Libro updateByUser(Libro l) throws Exception {
 		try (Connection conexion = ConnectionManager.getConnection();
 				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE_BY_USER);
 
 		) {
-			 l= new Libro();
-			int idLibro= l.getId();
+			l = new Libro();
+			int idLibro = l.getId();
 			int idUsuario = l.getUsuario().getId();
-			
+
 			try {
 				checkSeguridad(idLibro, idUsuario);
 			} catch (SeguridadException e) {
@@ -470,15 +478,15 @@ public class LibroDAOImpl implements LibroDAO {
 			} catch (Exception e) {
 				LOG.error(e);
 				e.printStackTrace();
-			} 
-			
+			}
+
 			pst.setString(1, l.getTitulo());
 			pst.setString(2, l.getImagen());
 			pst.setFloat(3, l.getPrecio());
 			pst.setInt(4, l.getGenero().getId());
 			pst.setInt(5, l.getId());
 			LOG.debug(pst);
-			
+
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows != 1) {
 				throw new Exception("No se puede podificar el registro con id=" + l.getId());
@@ -497,7 +505,6 @@ public class LibroDAOImpl implements LibroDAO {
 
 		return l;
 	}
-	
 
 	@Override
 	public Libro checkSeguridad(int idLibro, int idUsuario) throws Exception, SeguridadException {
@@ -511,5 +518,4 @@ public class LibroDAOImpl implements LibroDAO {
 		return null;
 	}
 
-	
 }
