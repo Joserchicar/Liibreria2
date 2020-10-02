@@ -14,7 +14,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java-version>1.8</java-version>
 		<junit.version>4.12</junit.version>
-		<javax.servlet.api>3.0.1</javax.servlet.api>
+		<javax.servlet.api>3.1.0</javax.servlet.api>
 		<javax.servlet.jsp.version>2.2</javax.servlet.jsp.version>
 		<javax.servlet.jstl.version>1.2</javax.servlet.jstl.version>
 	</properties>
@@ -80,6 +80,18 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.13.1</version>
+		</dependency>
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		
+		<!-- JAVA 2 JSON -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.6</version>
 		</dependency>
 
 		<!-- Testing -->

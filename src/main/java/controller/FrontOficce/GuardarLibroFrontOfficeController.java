@@ -8,7 +8,6 @@ import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +17,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 
 import org.apache.log4j.Logger;
 
@@ -38,49 +36,49 @@ public class GuardarLibroFrontOfficeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger LOG = Logger.getLogger(GuardarLibroFrontOfficeController.class);
 	private final static LibroDAOImpl daoLibro = LibroDAOImpl.getInstance();
-	private static String PATH_FICHERO =  "/home/javaee/eclipse-workspace/libreria/src/main/webapp/imagenes/";
+	private static String PATH_FICHERO = "/home/javaee/eclipse-workspace/libreria/src/main/webapp/imagenes/";
 
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private static Validator validator = factory.getValidator();
-	
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String paramId = request.getParameter("id");
 		Libro l = new Libro();
-		HttpSession session = request.getSession();			
+		HttpSession session = request.getSession();
 		Usuario usuario = new Usuario();
 		String view = "formulario.jsp";
-		
-try {
-			
-			usuario = (Usuario)session.getAttribute("usuario_login");
+
+		try {
+
+			usuario = (Usuario) session.getAttribute("usuario_login");
 			int idUsuario = usuario.getId();
 			int idLibro = Integer.parseInt(paramId);
-			
-			// recuperar solo si es diferente de Cero, si id == 0 es un NUEVO producto 
-			if ( idLibro != 0 ) {
+
+			// recuperar solo si es diferente de Cero, si id == 0 es un NUEVO producto
+			if (idLibro != 0) {
 				l = daoLibro.checkSeguridad(idLibro, idUsuario);
-			}				
-			
-			
-		}catch (SeguridadException e) {
+			}
+
+		} catch (SeguridadException e) {
 			view = "/views/frontoffice/inicio";
 			LOG.error("SE estan saltando la seguridad " + usuario);
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			LOG.error(e);
-			
-		}finally {
+
+		} finally {
 			request.setAttribute("libro", l);
 			request.getRequestDispatcher(view).forward(request, response);
 		}
-		
+
 	}
+
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -91,7 +89,7 @@ try {
 		Alerta alerta = new Alerta();
 		Libro l = new Libro();
 		Usuario usuario = new Usuario();
-		HttpSession session = request.getSession();	
+		HttpSession session = request.getSession();
 		String view = "formulario.jsp";
 
 		// recoger parametros del formulario
@@ -101,106 +99,104 @@ try {
 		String precio = request.getParameter("precio");
 		String imagen = request.getParameter("imagen");
 		String generoId = request.getParameter("genero_id");
-		Part filePart =request.getPart("fichero");// Retrieves <input type="file" name="file">
-		//String imagen = request.getParameter("imagen");	// anteriormente el parmetro imagen  
-		
+		Part filePart = request.getPart("fichero");// Retrieves <input type="file" name="file">
+		// String imagen = request.getParameter("imagen"); // anteriormente el parmetro
+		// imagen
+
 		try {
 
 			int idLibro = Integer.parseInt(idParametro);
-			usuario = (Usuario)session.getAttribute("usuario_login");
+			usuario = (Usuario) session.getAttribute("usuario_login");
 			int idUsuario = usuario.getId();
-			
-			/* **************************************************************** 
-			 * Comprobar Seguridad, siempre que no sea un nuevo Producto 
-			 * ***************************************************************/
-			if ( idLibro != 0 ) {
-				l = daoLibro.checkSeguridad(idLibro, idUsuario); // lanza SeguridadException si no le pertenece el producto
+
+			/*
+			 * **************************************************************** Comprobar
+			 * Seguridad, siempre que no sea un nuevo Producto
+			 ***************************************************************/
+			if (idLibro != 0) {
+				l = daoLibro.checkSeguridad(idLibro, idUsuario); // lanza SeguridadException si no le pertenece el
+																	// producto
 			}
-			
-			
+
 			int idGenero = Integer.parseInt(generoId);
 			float precioFloat = Float.parseFloat(precio);
-			
+
 			// crear objeto con esos parametros
 			l.setId(idLibro);
 			l.setTitulo(titulo);
-			String fichNombre =filePart.getSubmittedFileName();
-			l.setImagen( "imagenes/" + fichNombre);
-			//l.setImagen(imagen);
+			String fichNombre = filePart.getSubmittedFileName();
+			l.setImagen("imagenes/" + fichNombre);
+			// l.setImagen(imagen);
 			l.setPrecio(precioFloat);
-			
+
 			Genero g = new Genero();
 			g.setId(idGenero);
-			l.setGenero(g);		
-			
-			// recuperar usuario de session y setearlo en el producto				
+			l.setGenero(g);
+
+			// recuperar usuario de session y setearlo en el producto
 			l.setUsuario(usuario);
-			
-			
-			// validar pojo				
+
+			// validar pojo
 			Set<ConstraintViolation<Libro>> violations = validator.validate(l);
-			
-			if ( violations.isEmpty() ) {	
-				
+
+			if (violations.isEmpty()) {
+
 				/* GUARDAR PRODUCTO EN BBDD */
-				if ( idLibro == 0 ) {
+				if (idLibro == 0) {
 					daoLibro.insert(l);
 					uploadImagen(filePart, fichNombre, PATH_FICHERO);
-				}else {
+				} else {
 					daoLibro.updateByUser(l);
 				}
-				alerta = new Alerta( "success", "Una vez creado el producto, deberas esperar unas horas hasta que se validen sus datos.");
-				
-			}else {
+				alerta = new Alerta("success",
+						"Una vez creado el producto, deberas esperar unas horas hasta que se validen sus datos.");
+
+			} else {
 				String errores = "";
-				for (ConstraintViolation<Libro> v : violations) {					
-					errores += "<p><b>" + v.getPropertyPath() + "</b>: "  + v.getMessage() + "</p>";					
-				}				
-				alerta = new Alerta( "warning", errores );
+				for (ConstraintViolation<Libro> v : violations) {
+					errores += "<p><b>" + v.getPropertyPath() + "</b>: " + v.getMessage() + "</p>";
+				}
+				alerta = new Alerta("warning", errores);
 			}
-			
-		}catch (SeguridadException e) {
+
+		} catch (SeguridadException e) {
 			view = "/views/frontoffice/inicio";
-			LOG.error(" Intentan saltarse la seguridad " + usuario );	
-	
-		}catch (Exception e) {				
+			LOG.error(" Intentan saltarse la seguridad " + usuario);
+
+		} catch (Exception e) {
 			LOG.error(e);
-			alerta = new Alerta( "warning", "Lo sentimos pero ese nombre ya esta registrado" );
-			
-		}finally {
-		
+			alerta = new Alerta("warning", "Lo sentimos pero ese nombre ya esta registrado");
+
+		} finally {
+
 			request.setAttribute("alerta", alerta);
 			request.setAttribute("libro", l);
 			request.getRequestDispatcher(view).forward(request, response);
-		}	
+		}
 	}
+
 	/**
-	 * Guardamos un fichero 
+	 * Guardamos un fichero
 	 * 
-	 * @param filePart file input recogido del formulario
+	 * @param filePart   file input recogido del formulario
 	 * @param fichNombre nombre de la imagen
-	 * @param path ruta donde guardamos la imagen
+	 * @param path       ruta donde guardamos la imagen
 	 * 
 	 * @throws IOException si no existe la imagen
-	 * @throws Exception si no es del tipo png o jpg, o tamaño mayor que 1Gb
+	 * @throws Exception   si no es del tipo png o jpg, o tamaño mayor que 1Gb
 	 */
-	private void uploadImagen(Part filePart, String fichNombre, String path) throws IOException, Exception{
-		
-		long fichTamanio = filePart.getSize();			
-		LOG.debug( "Fichero nombre: " + fichNombre + " tamaño: " + fichTamanio + " bytes");
-		
-		//TODO Exception si no es del tipo png o jpg, o tamaño mayor que 1Gb
-		
-		InputStream fichContent = filePart.getInputStream();				
-		File file = new File( path + fichNombre );
-		Files.copy(fichContent, file.toPath());
-		
-		
-		
-		LOG.info("Imagen subida " + PATH_FICHERO + fichNombre );
-		
-		
-	}
-}	
+	private void uploadImagen(Part filePart, String fichNombre, String path) throws IOException, Exception {
 
-		
+		long fichTamanio = filePart.getSize();
+		LOG.debug("Fichero nombre: " + fichNombre + " tamaño: " + fichTamanio + " bytes");
+
+		// TODO Exception si no es del tipo png o jpg, o tamaño mayor que 1Gb
+
+		InputStream fichContent = filePart.getInputStream();
+		File file = new File(path + fichNombre);
+		Files.copy(fichContent, file.toPath());
+
+		LOG.info("Imagen subida " + PATH_FICHERO + fichNombre);
+
+	}
+}

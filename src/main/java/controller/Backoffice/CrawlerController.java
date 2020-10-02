@@ -14,6 +14,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import controller.Utilidades;
 import modelo.modeloDAOImpl.GeneroDAOImpl;
 import modelo.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Genero;
