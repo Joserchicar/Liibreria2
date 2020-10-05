@@ -97,7 +97,7 @@ public class GuardarLibroFrontOfficeController extends HttpServlet {
 		String idParametro = request.getParameter("id");
 		String titulo = request.getParameter("titulo");
 		String precio = request.getParameter("precio");
-		String imagen = request.getParameter("imagen");
+		// String imagen = request.getParameter("imagen");
 		String generoId = request.getParameter("genero_id");
 		Part filePart = request.getPart("fichero");// Retrieves <input type="file" name="file">
 		// String imagen = request.getParameter("imagen"); // anteriormente el parmetro

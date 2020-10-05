@@ -1,6 +1,7 @@
 package controller.FrontOficce;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,7 +36,7 @@ public class InicioFrontOfficeController extends HttpServlet {
 		Usuario usuarioSession = (Usuario) request.getSession().getAttribute("usuario_login");
 		int idUsuario = usuarioSession.getId();
 
-		//  recuperar datos de una VIEW
+		// recuperar datos de una VIEW
 
 		// ArrayList<Producto> aprobados = daoProducto.getAllByUser( idUsuario, true);
 		// ArrayList<Producto> pendientes = daoProducto.getAllByUser( idUsuario, false);
@@ -69,7 +70,7 @@ public class InicioFrontOfficeController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		doGet(request, response);
 	}
 

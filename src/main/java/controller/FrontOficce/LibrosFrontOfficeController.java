@@ -55,7 +55,7 @@ public class LibrosFrontOfficeController extends HttpServlet {
 
 			request.setAttribute("libros", libros);
 			request.setAttribute("titulo", titulo);
-			request.getRequestDispatcher("Libro.jsp").forward(request, response);
+			request.getRequestDispatcher("Libros.jsp").forward(request, response);
 
 		}
 
