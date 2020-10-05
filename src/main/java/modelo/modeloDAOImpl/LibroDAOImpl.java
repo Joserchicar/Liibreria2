@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
-import javax.naming.NamingException;
-
 import org.apache.log4j.Logger;
 
 import modelo.conexion.ConnectionManager;
@@ -138,9 +136,6 @@ public class LibroDAOImpl implements LibroDAO {
 
 		) {
 
-			// TODO mirar como hacerlo con una SQL, "IS NOT NULL" o "IS NULL"
-			// pst.setBoolean(1, isValidado); // me sustituye con un 1 o 0
-
 			pst.setNull(1, java.sql.Types.NULL);
 			pst.setInt(1, idUsuario);
 
@@ -172,10 +167,9 @@ public class LibroDAOImpl implements LibroDAO {
 		try (Connection conexion = ConnectionManager.getConnection();
 				PreparedStatement pst = conexion.prepareStatement(SQL_GET_LAST);) {
 			pst.setInt(1, numReg);
-			System.out.println("SQL_GET_LAST:" + pst);
+			LOG.debug(pst);
 			try (ResultSet rs = pst.executeQuery()) {
 
-				LOG.debug(pst);
 				while (rs.next()) {
 					registros.add(mapper(rs));
 				}
@@ -320,8 +314,6 @@ public class LibroDAOImpl implements LibroDAO {
 	@Override
 	public Libro insert(Libro libro) throws Exception {
 
-		ArrayList<Libro> l = new ArrayList<Libro>();
-
 		// Execute Query
 
 		try (Connection conexion = ConnectionManager.getConnection();
@@ -368,8 +360,7 @@ public class LibroDAOImpl implements LibroDAO {
 		// execute query
 
 		try (Connection conexion = ConnectionManager.getConnection();
-				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE_BY_USER,
-						PreparedStatement.RETURN_GENERATED_KEYS);
+				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE, PreparedStatement.RETURN_GENERATED_KEYS);
 
 		) {
 
@@ -436,6 +427,57 @@ public class LibroDAOImpl implements LibroDAO {
 		return result;
 	}
 
+	public Libro updateByUser(Libro l) throws Exception {
+		try (Connection conexion = ConnectionManager.getConnection();
+				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE_BY_USER);
+
+		) {
+
+			int idLibro = l.getId();
+			int idUsuario = l.getUsuario().getId();
+
+			checkSeguridad(idLibro, idUsuario);
+
+			pst.setString(1, l.getTitulo());
+			pst.setString(2, l.getImagen());
+			pst.setFloat(3, l.getPrecio());
+			pst.setInt(4, l.getGenero().getId());
+			pst.setInt(5, l.getId());
+			LOG.debug(pst);
+
+			int affectedRows = pst.executeUpdate();
+			if (affectedRows != 1) {
+				throw new Exception("No se puede podificar el registro con id=" + l.getId());
+			}
+
+		}
+
+		return l;
+	}
+
+	@Override
+	public Libro checkSeguridad(int idLibro, int idUsuario) throws Exception, SeguridadException {
+		Libro registro = new Libro();
+
+		try (Connection conexion = ConnectionManager.getConnection();
+				PreparedStatement pst = conexion.prepareStatement(SQL_GET_BY_ID_USER);) {
+
+			pst.setInt(1, idLibro);
+			pst.setInt(2, idUsuario);
+			LOG.debug(pst);
+			ResultSet rs = pst.executeQuery();
+
+			if (rs.next()) {
+				registro = mapper(rs);
+			} else {
+				throw new SeguridadException();
+			}
+
+		}
+
+		return registro;
+	}
+
 	private Libro mapper(ResultSet rs) throws SQLException {
 
 		Libro l = new Libro();
@@ -452,70 +494,12 @@ public class LibroDAOImpl implements LibroDAO {
 
 		l.setGenero(g);
 
-		// u.setId(rs.getInt("id_usuario"));
-		// u.setNombre(rs.getString("nombre"));
+		u.setId(rs.getInt("id_usuario"));
+		u.setNombre(rs.getString("nombre"));
 
-		// l.setUsuario(u);
-
-		return l;
-
-	}
-
-	public Libro updateByUser(Libro l) throws Exception {
-		try (Connection conexion = ConnectionManager.getConnection();
-				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE_BY_USER);
-
-		) {
-			l = new Libro();
-			int idLibro = l.getId();
-			int idUsuario = l.getUsuario().getId();
-
-			try {
-				checkSeguridad(idLibro, idUsuario);
-			} catch (SeguridadException e) {
-				LOG.error(e);
-				e.printStackTrace();
-			} catch (Exception e) {
-				LOG.error(e);
-				e.printStackTrace();
-			}
-
-			pst.setString(1, l.getTitulo());
-			pst.setString(2, l.getImagen());
-			pst.setFloat(3, l.getPrecio());
-			pst.setInt(4, l.getGenero().getId());
-			pst.setInt(5, l.getId());
-			LOG.debug(pst);
-
-			int affectedRows = pst.executeUpdate();
-			if (affectedRows != 1) {
-				throw new Exception("No se puede podificar el registro con id=" + l.getId());
-			}
-
-		} catch (ClassNotFoundException e) {
-			LOG.error(e);
-			e.printStackTrace();
-		} catch (SQLException e) {
-			LOG.error(e);
-			e.printStackTrace();
-		} catch (NamingException e) {
-			LOG.error(e);
-			e.printStackTrace();
-		}
+		l.setUsuario(u);
 
 		return l;
-	}
 
-	@Override
-	public Libro checkSeguridad(int idLibro, int idUsuario) throws Exception, SeguridadException {
-		// TODO Auto-generated method stub
-		return null;
 	}
-
-	@Override
-	public ArrayList<Libro> getAllByNombre(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

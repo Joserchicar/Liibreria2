@@ -15,7 +15,12 @@ import modelo.modeloDAOImpl.LibroDAOImpl;
 import modelo.pojo.Libro;
 
 /**
- * Servlet implementation class LibroController
+ * Controlador para el listado de los libros existente
+ * 
+ * "escucha" en /Libro.
+ * 
+ * @author Joserra
+ * @version 1.0
  */
 @WebServlet("/Libro")
 public class LibroController extends HttpServlet {
@@ -23,8 +28,11 @@ public class LibroController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
+	 * presenta una lista de todos los libros existentes.
+	 * 
+	 * Obtiene una {@code ArrayList<Libro> libros} y la envia para que se muestre a
+	 * la vista views/libros/Libro.jsp, donde se muestra como tabla de libros.
+	 * 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

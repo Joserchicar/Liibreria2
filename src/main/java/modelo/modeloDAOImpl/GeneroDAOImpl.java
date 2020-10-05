@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 
 import modelo.conexion.ConnectionManager;
 import modelo.modeloDAO.GeneroDAO;
-import modelo.modeloDAO.SeguridadException;
 import modelo.pojo.Genero;
 import modelo.pojo.Libro;
 
@@ -115,6 +114,11 @@ public class GeneroDAOImpl implements GeneroDAO {
 
 	}
 
+	/**
+	 * lista los generos ordenadas por el id
+	 * 
+	 * @return registro;
+	 */
 	@Override
 	public Genero getById(int id) throws Exception {
 
@@ -141,8 +145,7 @@ public class GeneroDAOImpl implements GeneroDAO {
 	}
 
 	@Override
-	
-	
+
 	public Genero delete(int id) throws Exception {
 
 		Genero genero = null;
@@ -164,39 +167,61 @@ public class GeneroDAOImpl implements GeneroDAO {
 	}
 
 	@Override
-	
-	
+
 	public Genero insert(Genero genero) throws Exception {
-		
-		try(
-				Connection conexion = ConnectionManager.getConnection();	
-				PreparedStatement pst = conexion.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);				
-			){
-		
-				pst.setString(1, genero.getGenero() );			
-				LOG.debug(pst);
-				
-				int affectedRows = pst.executeUpdate();			
-				if ( affectedRows == 1 ) {					
-					try( ResultSet rsKeys = pst.getGeneratedKeys() ){						
-						if ( rsKeys.next() ) {
-							int id = rsKeys.getInt(1);
-							genero.setId(id);
-						}						
-					}				
-					
-			}else {				
-				throw new Exception("No se ha podido guardar el registro " + genero );
+
+		try (Connection conexion = ConnectionManager.getConnection();
+				PreparedStatement pst = conexion.prepareStatement(SQL_INSERT,
+						PreparedStatement.RETURN_GENERATED_KEYS);) {
+
+			pst.setString(1, genero.getGenero());
+			LOG.debug(pst);
+
+			int affectedRows = pst.executeUpdate();
+			if (affectedRows == 1) {
+				try (ResultSet rsKeys = pst.getGeneratedKeys()) {
+					if (rsKeys.next()) {
+						int id = rsKeys.getInt(1);
+						genero.setId(id);
+					}
+				}
+
+			} else {
+				throw new Exception("No se ha podido guardar el registro " + genero);
 			}
 		}
-		
+
 		return genero;
 	}
 
 	@Override
-	
+
 	public Genero update(Genero pojo) throws Exception {
-		throw new Exception("Sin implementar de momento");
+		;
+
+		try (Connection conexion = ConnectionManager.getConnection();
+				PreparedStatement pst = conexion.prepareStatement(SQL_UPDATE,
+						PreparedStatement.RETURN_GENERATED_KEYS);) {
+
+			pst.setString(1, pojo.getGenero());
+			pst.setInt(2, pojo.getId());
+			LOG.debug(pst);
+
+			int affectedRows = pst.executeUpdate();
+			if (affectedRows == 1) {
+				try (ResultSet rsKeys = pst.getGeneratedKeys()) {
+					if (rsKeys.next()) {
+						int id = rsKeys.getInt(1);
+						pojo.setId(id);
+					}
+				}
+
+			} else {
+				throw new Exception("No se ha podido modificar el registro " + pojo);
+			}
+		}
+
+		return pojo;
 	}
 
 	private Genero mapper(ResultSet rs) throws SQLException {

@@ -3,6 +3,7 @@ package modelo.modeloDAOImpl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -11,9 +12,6 @@ import modelo.conexion.ConnectionManager;
 import modelo.modeloDAO.UsuarioDAO;
 import modelo.pojo.Rol;
 import modelo.pojo.Usuario;
-
-import java.sql.DriverManager;
-import java.sql.SQLException;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
 
@@ -49,6 +47,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return INSTANCE;
 	}
 
+	/**
+	 * Listado de todos los usuarios
+	 * 
+	 * @param objeto Usuario
+	 * @return {@code  ArrayList<Usuario> } lista de usuarios
+	 * @throws usuarios no encontrados
+	 * 
+	 */
 	@Override
 	public ArrayList<Usuario> getAll() throws Exception {
 
@@ -73,6 +79,14 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		return usuarios;
 	}
 
+	/**
+	 * Listado de todos los usuarios por su id
+	 * 
+	 * @param id int id del usuario
+	 * @return usuario Usuario usuario que tiene la id presentada
+	 * @throws usuarios no encontrados por no existir la id
+	 * 
+	 */
 	@Override
 	public Usuario getById(int id) throws Exception {
 		Usuario usuario = new Usuario();
@@ -100,7 +114,16 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 		return usuario;
 	}
-	
+
+	/**
+	 * Listado de usuarios que contengan una palabra concreta. Se busca una palabra
+	 * y se obtiene lista de libros que la tengan en su titulo.
+	 * 
+	 * @param palabraBuscada String palabra contenida en el nombre
+	 * @return registros {@code rrayList<Usuario> } lista de libros cuyo nombre
+	 *         contiene la palabra
+	 * 
+	 */
 	@Override
 	public ArrayList<Usuario> getAllByNombre(String palabraBuscada) {
 		ArrayList<Usuario> registros = new ArrayList<Usuario>();
@@ -113,7 +136,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 			try (ResultSet rs = pst.executeQuery()) {
 
 				while (rs.next()) {
-					registros.add( mapper(rs) );
+					registros.add(mapper(rs));
 				} // while
 
 			} // 2º try
@@ -142,9 +165,12 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 		return usuario;
 	}
+
 	/**
 	 * Inserta un nuevo usuario en la tabla <b>usuario</b>
-	 * @param usuario necesitamos que esten rellenos los atributos de: <b>nombre</b>, <b>contrasenia</b> y <b>Rol (solo su id)</b>
+	 * 
+	 * @param usuario necesitamos que esten rellenos los atributos de:
+	 *                <b>nombre</b>, <b>contrasenia</b> y <b>Rol (solo su id)</b>
 	 * @see com.ipartek.formacion.modelo.pojo.Rol
 	 * @return Usuario con el id actualizado
 	 * @throws Exception Si el nombre del usuario ya existe ne la bbdd
@@ -154,10 +180,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 		try (Connection con = ConnectionManager.getConnection();
 				PreparedStatement pst = con.prepareStatement(SQL_INSERT, PreparedStatement.RETURN_GENERATED_KEYS);) {
 
-			pst.setString(1, p.getNombre() );
-			pst.setString(2, p.getContrasenia() );
-			pst.setInt(3, p.getRol().getId() );
-			
+			pst.setString(1, p.getNombre());
+			pst.setString(2, p.getContrasenia());
+			pst.setInt(3, p.getRol().getId());
+
 			LOG.debug(pst);
 			int affectedRows = pst.executeUpdate();
 			if (affectedRows == 1) {
@@ -177,11 +203,34 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 		return p;
 	}
+
 	@Override
 	public Usuario update(Usuario p) throws Exception {
-		throw new Exception("Sin implementar de momento");
+		try (Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_UPDATE);) {
+
+			pst.setString(1, p.getNombre());
+			pst.setString(2, p.getContrasenia());
+			pst.setInt(3, p.getRol().getId());
+			pst.setInt(4, p.getId());
+
+			LOG.debug(pst);
+			if (pst.executeUpdate() != 1) {
+				throw new Exception("No se puede modificar registro " + p);
+			}
+
+		}
+
+		return p;
 	}
 
+	/**
+	 * comprueba que el usuario existe en el login
+	 * 
+	 * @param nombre String nombre de usuario. param contrasenia String contraseña
+	 *               del usuario
+	 * @return usuario objeto Usuario
+	 */
 	@Override
 	public Usuario existe(String nombre, String contrasenia) {
 
@@ -234,5 +283,40 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
 	}
 
-	
+	/**
+	 * buscar libro por nombre
+	 * 
+	 * @param nombre String nombre
+	 * @return isEncontrado puede ser true o false
+	 * 
+	 */
+	@Override
+	public boolean buscarByNombre(String nombre) {
+		boolean isEncontrado = false;
+
+		try (Connection con = ConnectionManager.getConnection();
+				PreparedStatement pst = con.prepareStatement(SQL_GET_ALL_BY_NOMBRE);
+
+		) {
+
+			pst.setString(1, nombre);
+
+			LOG.debug(pst);
+			try (ResultSet rs = pst.executeQuery()) {
+
+				if (rs.next()) {
+					isEncontrado = true;
+				}
+
+			} // 2º try
+
+		} catch (Exception e) {
+
+			e.getStackTrace();
+		}
+
+		return isEncontrado;
+
+	}
+
 }

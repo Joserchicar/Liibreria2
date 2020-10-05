@@ -17,8 +17,9 @@ public class Utilidades {
 	 * 
 	 * @param search url donde busca la imagen
 	 * @param path   directorio donde se guarda, es necesario especificar tambien el
-	 *               nombre y estension de la imaegn
-	 * @throws IOException
+	 *               nombre y extension de la imaegn
+	 * @throws IOException alguno de los parametros no es correcto y no se encuentra
+	 *                     la imagen.
 	 */
 	public static void downloadImage(String search, String path) throws IOException {
 
