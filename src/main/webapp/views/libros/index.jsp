@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="includes/cabecera.jsp">
+<jsp:include page="../../includes/cabecera.jsp">
 	<jsp:param name="pagina" value="inicio" />
 	<jsp:param name="title" value="inicio" />
 </jsp:include>
@@ -47,4 +47,4 @@
 </c:forEach>
 
 
-<%@include file="includes/pie.jsp"%>
+<%@include file="../../includes/pie.jsp"%>

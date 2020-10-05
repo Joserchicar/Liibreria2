@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<jsp:include page="includes/cabecera.jsp">
+<jsp:include page="../../includes/cabecera.jsp">
 	<jsp:param name="pagina" value="registro" />
 	<jsp:param name="title" value="registro" />
 </jsp:include>
@@ -16,7 +16,7 @@
 
 	<div class="col">
 
-		<form action="registro" method="post">
+		<form action="libro" method="post">
 
 			<div class="form-group">
 				<label for="id">id </label> <input type="text" name="id" id="id"
@@ -64,4 +64,4 @@
 
 
 
-<%@include file="includes/pie.jsp"%>
+<%@include file="../../includes/pie.jsp"%>

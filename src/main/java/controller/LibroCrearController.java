@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Set;
 
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,7 +13,6 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
 
 import org.apache.log4j.Logger;
 
@@ -26,14 +24,14 @@ import modelo.pojo.Libro;
 /**
  * Servlet implementation class RegistroController
  */
-@WebServlet("/registro")
-public class RegistroController extends HttpServlet {
+@WebServlet("/libro")
+public class LibroCrearController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final Logger LOG = Logger.getLogger(RegistroController.class);
+	private static final Logger LOG = Logger.getLogger(LibroCrearController.class);
 
 	private static LibroDAOImpl daoLibro = LibroDAOImpl.getInstance();
 	private static GeneroDAOImpl daoGenero = GeneroDAOImpl.getInstance();
-
+	// private static UsuarioDAOImpl daoUsuario= UsuarioDAOImpl.getInstance();
 	private static ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private static Validator validator = factory.getValidator();
 
@@ -65,7 +63,7 @@ public class RegistroController extends HttpServlet {
 
 			request.setAttribute("genero", daoGenero.getAll());
 			// ir a la nueva vista o jsp
-			request.getRequestDispatcher("registro.jsp").forward(request, response);
+			request.getRequestDispatcher("formulario.jsp").forward(request, response);
 		}
 
 	}
@@ -157,7 +155,7 @@ public class RegistroController extends HttpServlet {
 
 			// ir a la nueva vista o jsp
 
-			request.getRequestDispatcher("views/productos/formulario.jsp").forward(request, response);
+			request.getRequestDispatcher("views/libros/formulario.jsp").forward(request, response);
 		} // trycatch
 
 	}
