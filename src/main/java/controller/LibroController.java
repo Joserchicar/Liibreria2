@@ -19,9 +19,8 @@ import modelo.pojo.Libro;
  */
 @WebServlet("/Libro")
 public class LibroController extends HttpServlet {
-	private static final Logger LOG=Logger.getLogger(LibroController.class);
+	private static final Logger LOG = Logger.getLogger(LibroController.class);
 	private static final long serialVersionUID = 1L;
-
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -30,24 +29,22 @@ public class LibroController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		//conseguir libros de la BBDD
+		// conseguir libros de la BBDD
 		LibroDAOImpl dao = LibroDAOImpl.getInstance();
 		ArrayList<Libro> libros = new ArrayList<Libro>();
-		
-		
-		
+
 		try {
 			libros = dao.getAll();
 		} catch (Exception e) {
-			
+
 			LOG.error(e);
-			
+
 		}
 		// obtengo los datos para enviar a la vista
 		request.setAttribute("libros", libros);
 
-		//ir a la nueva vista
-		request.getRequestDispatcher("libro.jsp").forward(request, response);
+		// ir a la nueva vista
+		request.getRequestDispatcher("views/libros/Libro.jsp").forward(request, response);
 
 	}
 
@@ -57,7 +54,7 @@ public class LibroController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-	
+
 		doGet(request, response);
 	}
 

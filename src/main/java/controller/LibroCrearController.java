@@ -63,7 +63,7 @@ public class LibroCrearController extends HttpServlet {
 
 			request.setAttribute("genero", daoGenero.getAll());
 			// ir a la nueva vista o jsp
-			request.getRequestDispatcher("formulario.jsp").forward(request, response);
+			request.getRequestDispatcher("views/libros/formulario.jsp").forward(request, response);
 		}
 
 	}
@@ -85,18 +85,20 @@ public class LibroCrearController extends HttpServlet {
 			// recoger los valores del formulario
 			String idParametro = request.getParameter("id");
 			String titulo = request.getParameter("titulo");
+			String precio = request.getParameter("precio");
+			String imagen = request.getParameter("imagen");
 			String generoId = request.getParameter("genero_id");
 
 			int id = Integer.parseInt(idParametro);
 			int idGenero = Integer.parseInt(generoId);
-
-			// DAO
-			LibroDAOImpl dao = LibroDAOImpl.getInstance();
+			float precioFloat = Float.parseFloat(precio);
 
 			// parametros
 
 			libro.setId(id);
 			libro.setTitulo(titulo);
+			libro.setImagen(imagen);
+			libro.setPrecio(precioFloat);
 
 			Genero g = new Genero();
 			g.setId(idGenero);

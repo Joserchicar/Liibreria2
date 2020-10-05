@@ -5,13 +5,11 @@ import java.io.IOException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import modelo.modeloDAO.UsuarioDAO;
 import modelo.modeloDAOImpl.UsuarioDAOImpl;
 import modelo.pojo.Rol;
 import modelo.pojo.Usuario;
@@ -19,7 +17,7 @@ import modelo.pojo.Usuario;
 /**
  * Servlet implementation class LoginController
  */
-@WebServlet("/Login")
+@WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +27,6 @@ public class LoginController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -62,15 +59,19 @@ public class LoginController extends HttpServlet {
 			request.setAttribute("alerta", new Alerta("success", "Ongi Etorri, ya estas Logeado"));
 
 			if (usuario.getRol().getId() == Rol.ADMINISTRADOR) {
-				request.getRequestDispatcher("backoffice/inicioBacktOffice").forward(request, response);
+				// request.getRequestDispatcher("views/backoffice/inicioBacktOffice").forward(request,
+				// response);
+				response.sendRedirect("views/backoffice/inicio");
 			} else {
-				request.getRequestDispatcher("frontoffice/inicioBacktOffice").forward(request, response);
+				// request.getRequestDispatcher("views/frontoffice/inicioBacktOffice").forward(request,
+				// response);
+				response.sendRedirect("views/frontoffice/inicio");
 			}
 
 		} else {
 
 			request.setAttribute("alerta", new Alerta("warning", "Credenciales Incorrectas"));
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+			request.getRequestDispatcher("views/login.jsp").forward(request, response);
 		}
 
 	}
