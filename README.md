@@ -24,6 +24,8 @@ Hay dos roles diferentes para inicio de sesion.
 Para  mas detalles ver [pom.xml](https://github.com/Joserchicar/Liibreria2/blob/master/pom.xml) 
 
 
+
+
 ##Configuracion de la BBDD
 
 Para la creacion de la Base de Datos, disponemos de un archivo**libreria-bd.sql** en la raiz del proyecto, el cual crea el esquema de **libreria** y las tablas necesarias ademas de insertar los datos necesarios para la prueba.
@@ -64,3 +66,16 @@ Interesante revisar la documentacion [JavaDoc API](src/main/webapp/doc/index.htm
 
 En ella se indica la informacion de las distintas partes del proyecto que podemos encontrarnos.
 
+Ademas, recomendamos consltar la documentacion de los siguientes packages de Java:
+
+- **listener** - que se ejecuta la arrancar la aplicación.
+
+- ** controller.Backoffice** - controlador para Administrador
+
+- ** controller.Frontoffice** - controlador para Usuario 
+
+- **modelo.modeloDAO** - Dao para relacionar los pojos con las tablas de la BBDD
+
+- **modelo.pojo** - Clases para crear objetos de java
+
+- **modelo.seguridad** - Filtros de seguridad-
