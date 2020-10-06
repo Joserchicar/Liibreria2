@@ -25,7 +25,7 @@ public interface CRUDAble<P> {
 	 * 
 	 * @param id int id del objeto
 	 * @return el objeto
-	 * @throws Exception
+	 * @throws Exception no encontrado el objeto
 	 */
 
 	P getById(int id) throws Exception;
@@ -33,22 +33,24 @@ public interface CRUDAble<P> {
 	/**
 	 * 
 	 * @param id int id del objeto a borrar return P objeto P borrado
-	 * @throws for java.lang.Exception controla los posibles errores al introducir
-	 *             el tipo de parametro.
+	 * @return P devuelve un objeto borrado
+	 * @throws Exception controla los posibles errores al introducir el tipo de
+	 *                   parametro.
 	 * 
 	 */
 	P delete(int id) throws Exception;
 
 	/**
 	 * @param p objeto de la clase P
-	 * @return objeto P
+	 * @return Pp . objeto de clase P
+	 * @throws Exception no se inserta el objeto
 	 */
 	P insert(P p) throws Exception;
 
 	/**
 	 * @param p objeto P
 	 * @return objeto P
-	 * @throws for java.lang.Exception
+	 * @throws Exception Excepcion general. No se puede modificar el objeto
 	 */
 	P update(P p) throws Exception;
 

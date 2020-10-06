@@ -22,11 +22,11 @@ import modelo.pojo.Libro;
  * @parametro genero genero
  * 
  * 
- * @atributo encabezado titulo para h3 en index.jsp
- * @atributo categoriasConProductos ArrayList<Categoria>, que contiene tambien
- *           todos los productos de cada categoria
+ *            encabezado titulo para h3 en index.jsp
+ * @param categoriasConProductos ArrayList<Categoria>, que contiene tambien
+ *                               todos los productos de cada categoria
  * 
- * @view index.jsp
+ * @ see view/index.jsp
  * 
  */
 @WebServlet("/inicio")
