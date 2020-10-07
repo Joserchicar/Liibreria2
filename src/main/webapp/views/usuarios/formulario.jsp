@@ -9,7 +9,7 @@
 </jsp:include>
     <h1>Editar Usuario</h1>
 
-	<form action="usuario" method="post" >
+	<form action="usuario" method="post"  onsubmit="cifrar()">
 			
 		<div class="form-group">
 			<label for="id">id:</label>
@@ -72,13 +72,7 @@
 			</c:if>		
 				
     
-    
-    
-    
-    
-    
-    
-    
+   
     
     
 <jsp:include page="../../includes/pie.jsp"  />	

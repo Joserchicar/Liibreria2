@@ -9,42 +9,46 @@
 
 
 
-<h3>${encabezado}</h3>
+<h1>Listado Libros</h1>
+<p>${mensaje}</p>
+
+<a href="registro">Ir a formulario para Crear Nuevo Libro</a>
 
 
-<ol>
-	<c:forEach items="${libros}" var="l">
-		<li>${l}</li>
-	</c:forEach>
-</ol>
+<!-- tabla listado libros -->
 
 
-<c:forEach items="${generoConLibros}" var="g">
 
-	<h4>${g.genero}</h4>
-	<hr>
+<table class="tabla table table-striped">
+	<thead>
+		<tr>
+			<td>Id</td>
+			<td>Titulo</td>
+			<td>Precio</td>
+			<td>Imagen</td>
+			<td>Genero</td>
+			<td>Acciones</td>
+		</tr>
+	</thead>
+	<tbody>
+		<c:forEach items="${libros}" var="l">
+			<tr>
+				<td>${l.id}</td>
+				<td>${l.titulo}</td>
+				<td>${l.precio}&euro;</td>
+				<td><img src="${l.imagen}" class="img-thumbnail"
+					alt="imagen..."></td>
+				<td>${l.genero.genero}</td>
+
+				<td><a href="registro?id=${l.id}" class="mr-4"> <i
+						class="far fa-edit fa-2x" title="Editar libro"></i></a> <a
+					href="EliminarLibro?id=${l.id}"
+					onclick="confirmar('¿Estas Seguro ?')"> <i
+						class="fas fa-trash fa-2x" title="Eliminar libro"></i></a></td>
+			</tr>
 	
-	<div class="row-card">
-
-		<c:forEach items="${g.libros}" var="l">
-
-			<div class="card">
-				<img src="${l.imagen}" class="card-img-top" alt="${l.titulo}">
-				
-				<div class="card-body">
-					<h5 class="card-title">${l.titulo}</h5>
-					<p>
-						<span class="badge badge-secondary">${l.genero.genero}</span>
-					</p>
-					<p class="precio">${l.precio} €</p>
-				</div>
-			</div>
-
 		</c:forEach>
-
-	</div>
-
-</c:forEach>
-
+	</tbody>
+</table>
 
 <%@include file="../../includes/pie.jsp"%>

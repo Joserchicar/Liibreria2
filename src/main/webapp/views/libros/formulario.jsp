@@ -20,7 +20,7 @@
 
 			<div class="form-group">
 				<label for="id">id </label> <input type="text" name="id" id="id"
-					Value="${libro.id}" class="form-control">
+					Value="${libro.id}" readonly class="form-control">
 			</div>
 			<br>
 			<div class="form-group">
@@ -55,7 +55,7 @@
 		</form>
 	</div>
 	<div class="col">
-		<img src="${producto.imagen}" class="img-thumbnail"
+		<img src="${libro.imagen}" class="img-thumbnail"
 			alt="imagen del producto a modificar">
 	</div>
 

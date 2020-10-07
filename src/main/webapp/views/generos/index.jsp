@@ -7,7 +7,7 @@
   <jsp:param name="title" value="genero" /> 
 </jsp:include>
 
-<h1>Listado Categorias</h1>
+<h1>Listado Generos</h1>
 	
 	<a href="genero?id=0">Crear Nuevo genero</a>
 		
