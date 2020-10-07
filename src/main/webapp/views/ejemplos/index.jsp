@@ -1,4 +1,4 @@
-<<jsp:include page="../../includes/cabecera.jsp" >
+<jsp:include page="../../includes/cabecera.jsp" >
   <jsp:param name="pagina" value="ejemplos" />
   <jsp:param name="title" value="Ejemplos" /> 
 </jsp:include>
