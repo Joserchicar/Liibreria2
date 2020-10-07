@@ -16,7 +16,11 @@ import modelo.pojo.Usuario;
 /**
  * /** Application Lifecycle Listener implementation class
  * ListenerUsuarioLogeados
- *
+ * 
+ * Crea una session en la que se recoge los datos del usuario que se ha logeado.
+ * 
+ * @author joserra
+ * @version 1.0
  */
 @WebListener
 public class ListenerUsuarioLogeados implements HttpSessionListener, HttpSessionAttributeListener {
@@ -35,7 +39,7 @@ public class ListenerUsuarioLogeados implements HttpSessionListener, HttpSession
 	 * @see HttpSessionListener#sessionDestroyed(HttpSessionEvent)
 	 */
 	public void sessionDestroyed(HttpSessionEvent se) {
-		LOG.trace("eliminada sesion");
+		LOG.trace("eliminada session");
 	}
 
 	/**
@@ -89,7 +93,7 @@ public class ListenerUsuarioLogeados implements HttpSessionListener, HttpSession
 	}
 
 	/**
-	 * @see HttpSessionAttributeListener#attributeRepla)ced(HttpSessionBindingEvent)
+	 * @see HttpSessionAttributeListener#attributeReplaced(HttpSessionBindingEvent)
 	 */
 	public void attributeReplaced(HttpSessionBindingEvent event) {
 		LOG.trace("modificado atributo en sesion");

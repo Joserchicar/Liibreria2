@@ -12,7 +12,11 @@ import modelo.modeloDAOImpl.GeneroDAOImpl;
 
 /**
  * Application Lifecycle Listener implementation class InicioAppListenner
- *
+ * 
+ * Listenner que arranca la aplicacion
+ * 
+ * @author Joserra
+ * @version 1.0
  */
 @WebListener
 public class InicioAppListener implements ServletContextListener {

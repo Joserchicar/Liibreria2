@@ -50,9 +50,9 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	/**
 	 * Listado de todos los usuarios
 	 * 
-	 * @param objeto Usuario
+	 * 
 	 * @return {@code  ArrayList<Usuario> } lista de usuarios
-	 * @throws usuarios no encontrados
+	 * @throws Exception usuarios no encontrados
 	 * 
 	 */
 	@Override
@@ -84,7 +84,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	 * 
 	 * @param id int id del usuario
 	 * @return usuario Usuario usuario que tiene la id presentada
-	 * @throws usuarios no encontrados por no existir la id
+	 * @throws Exception usuarios no encontrados por no existir la id
 	 * 
 	 */
 	@Override
@@ -169,10 +169,10 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 	/**
 	 * Inserta un nuevo usuario en la tabla <b>usuario</b>
 	 * 
-	 * @param usuario necesitamos que esten rellenos los atributos de:
-	 *                <b>nombre</b>, <b>contrasenia</b> y <b>Rol (solo su id)</b>
-	 * @see com.ipartek.formacion.modelo.pojo.Rol
-	 * @return Usuario con el id actualizado
+	 * @param p Usuario p necesitamos que esten rellenos los atributos de:
+	 *          <b>nombre</b>, <b>contrasenia</b> y <b>Rol (solo su id)</b>
+	 * @see modelo.pojo.Rol
+	 * @return p Usuario p con el id actualizado
 	 * @throws Exception Si el nombre del usuario ya existe ne la bbdd
 	 */
 	@Override

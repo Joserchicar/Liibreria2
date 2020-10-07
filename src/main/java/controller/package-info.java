@@ -7,7 +7,7 @@
  * controladores del Login , LogOut y registro de usuario, el CRUD de Libro y el
  * correspondiente a la creacion y gestion de los Generos literarios.
  * 
- * @autor Joserra
+ * @author Joserra
  * @version 1.0
  */
 

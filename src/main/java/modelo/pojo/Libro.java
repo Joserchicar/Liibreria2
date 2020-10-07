@@ -11,7 +11,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * Libro.java pojo del objeto libro
  * 
  * @author joserra
- * @Version 1.0
+ * @version 1.0
  * @see Genero sobre generos de los libros
  * @see Usuario usuario a quien pertenece el libro
  * 

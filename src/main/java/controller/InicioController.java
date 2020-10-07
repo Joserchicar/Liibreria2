@@ -17,16 +17,15 @@ import modelo.pojo.Libro;
 /**
  * Obtiene todos los libros por genero para listar
  * 
- * @parametro idGenero id genero, si es null muestra todas, else muestra
- *            productos de esa categoria
- * @parametro genero genero
+ * idGenero int id genero, si es null muestra todas, else muestra productos de
+ * esa categoria genGenero String definicion de genero
  * 
  * 
- *            encabezado titulo para h3 en index.jsp
- * @param categoriasConProductos ArrayList<Categoria>, que contiene tambien
- *                               todos los productos de cada categoria
+ * encabezado titulo para h3 en index.jsp generosConLibros
+ * {@code ArrayList<Categoria>}, que contiene tambien todos los productos de
+ * cada categoria
  * 
- * @ see view/index.jsp
+ * nos envia a view/index.jsp
  * 
  */
 @WebServlet("/inicio")

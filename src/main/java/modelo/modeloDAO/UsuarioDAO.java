@@ -26,8 +26,8 @@ public interface UsuarioDAO extends CRUDAble<Usuario> {
 	/**
 	 * Busca si existe el usuario en la base datos
 	 * 
-	 * @param nombre
-	 * @param contrasenia
+	 * @param nombre      String nombre del usuario
+	 * @param contrasenia String el password del usuario
 	 * @return Usuario con datos si lo encuentra, si no existe retorna null
 	 */
 	Usuario existe(String nombre, String contrasenia);
