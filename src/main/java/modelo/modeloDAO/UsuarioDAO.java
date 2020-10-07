@@ -19,7 +19,8 @@ public interface UsuarioDAO extends CRUDAble<Usuario> {
 	 * 
 	 *         SQL = SELECT id, nombre FROM alumno WHERE nombre LIKE '%a%' ORDER BY
 	 *         nopmbre ASC;
-	 * 
+	 * @author Joserra
+	 * @version 1.0
 	 */
 	ArrayList<Usuario> getAllByNombre(String palabraBuscada);
 
