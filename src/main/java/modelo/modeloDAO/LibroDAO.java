@@ -7,11 +7,10 @@ import modelo.pojo.Libro;
 import modelo.pojo.ResumenUsuario;
 
 /**
- * Hereda los metodos basicos de la interfaz CrudAble Ademas define uno nuevo:
- * {@code ArrayList<libro> getAllByTitulo(String titulo)}. Incluye los metodos:
- * void validar( int id ), Libro checkSeguridad(int idLibro, int idUsuario),
- * Libro getById(int idLibro,int idUsuario),
- * {@code ArrayList<Libro> getLast(int numReg)},
+ * Hereda los metodos basicos de la interfaz CrudAble Ademas define algunos
+ * nuevos: {@code ArrayList<libro> getAllByTitulo(String titulo)}. void validar(
+ * int id ). Libro checkSeguridad(int idLibro, int idUsuario), Libro getById(int
+ * idLibro,int idUsuario), {@code ArrayList<Libro> getLast(int numReg)},
  * {@code ArrayList<Libro>getAllRangoPrecio(int precioMinimo,int precioMaximo)}
  * 
  * @author Joserra
